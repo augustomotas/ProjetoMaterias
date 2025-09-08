@@ -1,3 +1,4 @@
+/* Estilos Gerais */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f9;
@@ -10,161 +11,46 @@ body {
     box-sizing: border-box;
 }
 
-header {
-    margin-bottom: 20px;
-    text-align: center;
-    width: 100%;
-}
-
 main {
     width: 100%;
     max-width: 960px;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Alinha os elementos internos verticalmente */
-}
-
-.escolha-matriz {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.matriz-btn {
-    padding: 15px 30px;
-    border: 2px solid #007bff;
-    border-radius: 8px;
-    text-decoration: none;
-    color: #007bff;
-    font-weight: bold;
-    font-size: 1.2em;
-    transition: all 0.3s ease;
-    text-align: center;
-    min-width: 150px;
-}
-
-.matriz-btn:hover {
-    background-color: #007bff;
-    color: white;
-}
-
-.materias-container {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-}
-
-.materia-item {
-    display: flex;
     align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid #eee;
 }
 
-.materia-item:last-child {
-    border-bottom: none;
-}
-
-input[type="checkbox"] {
-    margin-right: 10px;
-    cursor: pointer;
-}
-
-.materia-item.bloqueada {
-    color: #999;
-    opacity: 0.6;
-}
-
-.materia-item.concluida {
-    text-decoration: line-through;
-    color: #5cb85c;
-}
-
-.controles {
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
+/* Estilos do Cabeçalho e Botão de Voltar */
+header {
     width: 100%;
-    max-width: 600px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 960px;
+    padding: 0 20px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
 }
 
-.controles button, .custom-file-upload {
-    padding: 10px 15px;
+header h1 {
+    margin: 0;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.voltar-btn {
+    background-color: #6c757d;
+    padding: 8px 12px;
     border: none;
-    background-color: #007bff;
+    border-radius: 5px;
     color: white;
     cursor: pointer;
-    border-radius: 5px;
     font-size: 16px;
     transition: background-color 0.2s ease;
 }
 
-.controles button:hover, .custom-file-upload:hover {
-    background-color: #0056b3;
-}
-
-.custom-file-upload {
-    border: 1px solid #ccc;
-    display: inline-block;
-    background-color: #f8f9fa;
-    color: #333;
-}
-
-.custom-file-upload:hover {
-    background-color: #e2e6ea;
-}
-
-#uploadProgressoInput {
-    display: none;
-}
-
-.aviso {
-    text-align: center;
-    color: #888;
-    font-style: italic;
-    padding: 20px;
-    width: 100%;
-}
-
-.periodo-box {
-    background-color: #f0f0f5;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
-    flex: 1 1 calc(33% - 20px);
-    min-width: 280px;
-    box-sizing: border-box;
-}
-
-.periodo-box h2 {
-    text-align: center;
-    margin-top: 0;
-    margin-bottom: 15px;
-    color: #444;
-    border-bottom: 2px solid #ccc;
-    padding-bottom: 10px;
-}
-
-.lista-materias {
-    display: flex;
-    flex-direction: column;
-}
-
-.voltar-btn {
-    background-color: #6c757d !important;
-}
-
 .voltar-btn:hover {
-    background-color: #5a6268 !important;
+    background-color: #5a6268;
 }
 
 /* Estilos para a barra de progresso */
@@ -198,23 +84,142 @@ input[type="checkbox"] {
     margin-top: 5px;
 }
 
-/* style.css */
-
-/* ... (código existente) ... */
-
-#adicionarQuebraBtn {
-    background-color: #ffc107 !important; /* Cor de alerta, como laranja */
-    color: #212529 !important;
+/* Estilos para a contagem de matérias */
+.contagem-container {
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 20px;
+    text-align: center;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-#adicionarQuebraBtn:hover {
-    background-color: #e0a800 !important;
+.contagem-container p {
+    margin: 5px 0;
+    font-size: 1em;
 }
 
-/* style.css */
+.contagem-container span {
+    font-weight: bold;
+    color: #007bff;
+}
 
-/* ... (código existente) ... */
+/* Estilos dos Controles Principais */
+.controles {
+    margin-left:5px ;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-width: 600px;
+}
 
+.controles button {
+    padding: 10px 15px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.2s ease;
+}
+
+.controles button:hover {
+    background-color: #0056b3;
+}
+
+#ocultarFeitasBtn {
+    background-color: #6c757d;
+}
+
+#ocultarFeitasBtn:hover {
+    background-color: #5a6268;
+}
+
+/* Estilos do Menu Hambúrguer */
+.hamburger-icon {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    background-color: #007bff;
+    padding: 5px;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+}
+
+.hamburger-icon:hover {
+    background-color: #0056b3;
+}
+
+.hamburger-icon span {
+    display: block;
+    width: 100%;
+    height: 4px;
+    background-color: #fff;
+    border-radius: 2px;
+}
+
+.hamburger-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100%;
+    background-color: #333;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hamburger-menu.active {
+    transform: translateX(0);
+}
+
+.hamburger-menu button,
+.hamburger-menu label {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    color: #fff;
+    background-color: #555;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.hamburger-menu button:hover,
+.hamburger-menu label:hover {
+    background-color: #777;
+}
+
+.hamburger-menu .close-btn {
+    align-self: flex-end;
+    font-size: 2em;
+    background-color: transparent;
+    color: #fff;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.hamburger-menu .close-btn:hover {
+    color: #ccc;
+    background-color: transparent;
+}
+
+/* Estilos do Container de Quebra de Pré-requisito */
 .quebra-requisito-container {
     margin-top: 20px;
     margin-bottom: 20px;
@@ -246,36 +251,79 @@ input[type="checkbox"] {
     border-radius: 5px;
     cursor: pointer;
     font-size: 1em;
+    transition: background-color 0.2s ease;
 }
 
 #confirmarQuebraBtn:hover {
     background-color: #e0a800;
 }
 
-.controles {
-    margin-bottom: 20px;
+/* Estilos do Container de Matérias */
+.materias-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 20px;
+    justify-content: center;
+}
+
+.periodo-box {
+    background-color: #f0f0f5;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(33% - 20px);
+    min-width: 280px;
+    box-sizing: border-box;
+}
+
+.periodo-box h2 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #444;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 10px;
+}
+
+.lista-materias {
+    display: flex;
+    flex-direction: column;
+}
+
+.materia-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.materia-item:last-child {
+    border-bottom: none;
+}
+
+input[type="checkbox"] {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.materia-item.bloqueada {
+    color: #999;
+    opacity: 0.6;
+}
+
+.materia-item.concluida {
+    text-decoration: line-through;
+    color: #5cb85c;
+}
+
+.aviso {
+    text-align: center;
+    color: #888;
+    font-style: italic;
+    padding: 20px;
     width: 100%;
-    max-width: 600px;
-}
-
-/* style.css */
-
-/* ... (código existente) ... */
-
-/* Estilo para o novo botão */
-#ocultarFeitasBtn {
-    background-color: #6c757d;
-}
-
-#ocultarFeitasBtn:hover {
-    background-color: #5a6268;
-}
-
-/* Classe para ocultar matérias */
-.oculta {
-    display: none;
 }

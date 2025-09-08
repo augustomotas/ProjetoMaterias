@@ -98,7 +98,10 @@ const matriz2008 = [
     { codigo: 'ING_II', nome: 'Inglês Instrumental II', preRequisitos: ['ING_I'], periodo: 'Optativas' },    
     { codigo: 'INTRO_ECO', nome: 'Introdução à Economia', preRequisitos: [], periodo: 'Optativas'},
     { codigo: 'GEST_AMB', nome: 'Gestão Ambiental', preRequisitos: [], periodo: 'Optativas'}
+
 /*
+
+,
     { codigo: 'AUTO_PROC_MAN', nome: 'Automação de Processos de Manufatura', preRequisitos: ['AUTO_PROC_CONT', 'LAB_AUTO_PROC_CONT'], periodo: 'Optativas' },
     { codigo: 'SIST_BIO_INSP', nome: 'Sistemas Bio-Inspirados', preRequisitos: ['IA', 'LAB_IA'], periodo: 'Optativas' },
     { codigo: 'ING_III', nome: 'Inglês Instrumental III', preRequisitos: ['ING_II'], periodo:'Optativas' },
@@ -108,14 +111,21 @@ const matriz2008 = [
     { codigo: 'IC_II', nome: 'Inteligência Computacional II', preRequisitos: ['IA', 'LAB_IA'], periodo:'Optativas' },
     { codigo: 'LAB_AUT_PROC_CONT', nome: 'Lab. de Automação de Processos Contínuos', preRequisitos: ['CONT_SIS_DIN', 'LAB_CONT_SIS_DIN'], periodo: 'Optativas' },
     { codigo: 'AUT_PROC_CONT', nome: 'Automação de Processos Contínuos', preRequisitos: ['CONT_SIS_DIN', 'LAB_CONT_SIS_DIN'], periodo: 'Optativas' },
-
-
-
-,
     { codigo: 'EDU_CORP', nome: 'Educação Corporal e Formação Humana', preRequisitos: [], periodo: 'Optativas' }
 
 
+
+
+
+
+
+
+
 */
+
+
+
+
 
 
 ];
@@ -146,6 +156,7 @@ function carregarProgresso() {
 // --- Seção 3: Lógica de Renderização e Interação da Interface ---
 const container = document.querySelector('.materias-container');
 const quebraMateriaSelect = document.getElementById('quebraMateriaSelect');
+const ocultarFeitasBtn = document.getElementById('ocultarFeitasBtn');
 
 function renderizarMaterias() {
     container.innerHTML = ''; 
@@ -190,15 +201,13 @@ function renderizarMaterias() {
         const listaMaterias = document.createElement('div');
         listaMaterias.classList.add('lista-materias');
         
-        let materiasNoPeriodoVisiveis = false; // Flag para verificar se alguma matéria é exibida
+        let materiasNoPeriodoVisiveis = false;
 
         periodos[periodo].forEach(materia => {
             if (!materiasVisiveis && progresso[materia.codigo]) {
-                // Se a opção de ocultar estiver ativada, não adiciona a matéria feita
                 return;
             }
 
-            // Se chegou aqui, a matéria é visível
             materiasNoPeriodoVisiveis = true;
             
             const item = document.createElement('div');
@@ -236,7 +245,6 @@ function renderizarMaterias() {
             }
         });
 
-        // Só adiciona o box do período se ele tiver alguma matéria visível
         if (materiasNoPeriodoVisiveis) {
             periodoBox.appendChild(tituloPeriodo);
             periodoBox.appendChild(listaMaterias);
@@ -247,8 +255,6 @@ function renderizarMaterias() {
     preencherQuebraRequisitoSelect();
     atualizarBarraDeProgresso();
 }
-
-// ... (resto do código do script.js, que não precisa de alterações) ...
 
 function calcularProgressoAcumulado(periodoAtual) {
     if (periodoAtual <= 1) {
@@ -273,15 +279,20 @@ function calcularProgressoAcumulado(periodoAtual) {
 function atualizarBarraDeProgresso() {
     const barra = document.getElementById('progressBar');
     const texto = document.getElementById('progressText');
+    const concluidasTexto = document.getElementById('materiasConcluidas');
+    const restantesTexto = document.getElementById('materiasRestantes');
 
-    if (!barra || !texto) return;
+    if (!barra || !texto || !concluidasTexto || !restantesTexto) return;
 
     const obrigatoriasConcluidas = obrigatorias.filter(m => progresso[m.codigo]).length;
     const totalObrigatorias = obrigatorias.length;
+    const obrigatoriasRestantes = totalObrigatorias - obrigatoriasConcluidas;
 
     if (totalObrigatorias === 0) {
         barra.style.width = '0%';
         texto.textContent = '0% concluído';
+        concluidasTexto.textContent = '0';
+        restantesTexto.textContent = '0';
         return;
     }
 
@@ -289,6 +300,8 @@ function atualizarBarraDeProgresso() {
 
     barra.style.width = `${porcentagem}%`;
     texto.textContent = `${porcentagem}% concluído`;
+    concluidasTexto.textContent = obrigatoriasConcluidas;
+    restantesTexto.textContent = obrigatoriasRestantes;
 }
 
 function preencherQuebraRequisitoSelect() {
@@ -373,7 +386,9 @@ function carregarProgressoDoArquivo(event) {
 function toggleMateriasVisibilidade() {
     materiasVisiveis = !materiasVisiveis;
     renderizarMaterias();
-    ocultarFeitasBtn.textContent = materiasVisiveis ? "Ocultar Feitas" : "Mostrar Todas";
+    if (ocultarFeitasBtn) {
+        ocultarFeitasBtn.textContent = materiasVisiveis ? "Ocultar Feitas" : "Mostrar Todas";
+    }
 }
 
 // --- Seção 5: Chamada Inicial ---
@@ -395,5 +410,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (ocultarFeitasBtn) {
         ocultarFeitasBtn.addEventListener('click', toggleMateriasVisibilidade);
+    }
+    
+    const hamburgerIcon = document.getElementById('hamburgerIcon');
+    const hamburgerMenu = document.getElementById('hamburgerMenu');
+    const closeMenuBtn = document.getElementById('closeMenuBtn');
+    if (hamburgerIcon && hamburgerMenu && closeMenuBtn) {
+        hamburgerIcon.addEventListener('click', () => {
+            hamburgerMenu.classList.add('active');
+        });
+
+        closeMenuBtn.addEventListener('click', () => {
+            hamburgerMenu.classList.remove('active');
+        });
     }
 });
