@@ -1,0 +1,89 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.materias-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+}
+
+.materia-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.materia-item:last-child {
+    border-bottom: none;
+}
+
+input[type="checkbox"] {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.materia-item.bloqueada {
+    color: #999;
+    opacity: 0.6;
+}
+
+.materia-item.concluida {
+    text-decoration: line-through;
+    color: #5cb85c;
+}
+
+/* Estilos para os botões de controle */
+.controles {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#baixarProgressoBtn {
+    padding: 10px 15px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+#baixarProgressoBtn:hover {
+    background-color: #0056b3;
+}
+
+#uploadProgressoInput {
+    display: none;
+}
+
+.custom-file-upload {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+.custom-file-upload:hover {
+    background-color: #e2e6ea;
+}
