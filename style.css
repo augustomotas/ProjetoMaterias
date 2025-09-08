@@ -6,11 +6,48 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-height: 100vh;
+    box-sizing: border-box;
 }
 
 header {
     margin-bottom: 20px;
     text-align: center;
+    width: 100%;
+}
+
+main {
+    width: 100%;
+    max-width: 960px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Alinha os elementos internos verticalmente */
+}
+
+.escolha-matriz {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.matriz-btn {
+    padding: 15px 30px;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+    font-size: 1.2em;
+    transition: all 0.3s ease;
+    text-align: center;
+    min-width: 150px;
+}
+
+.matriz-btn:hover {
+    background-color: #007bff;
+    color: white;
 }
 
 .materias-container {
@@ -18,8 +55,10 @@ header {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 600px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
 }
 
 .materia-item {
@@ -48,13 +87,17 @@ input[type="checkbox"] {
     color: #5cb85c;
 }
 
-/* Estilos para os botões de controle */
 .controles {
     margin-bottom: 20px;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+    max-width: 600px;
 }
 
-#baixarProgressoBtn {
+.controles button, .custom-file-upload {
     padding: 10px 15px;
     border: none;
     background-color: #007bff;
@@ -62,28 +105,177 @@ input[type="checkbox"] {
     cursor: pointer;
     border-radius: 5px;
     font-size: 16px;
-    margin-right: 10px;
+    transition: background-color 0.2s ease;
 }
 
-#baixarProgressoBtn:hover {
+.controles button:hover, .custom-file-upload:hover {
     background-color: #0056b3;
 }
 
-#uploadProgressoInput {
-    display: none;
-}
-
 .custom-file-upload {
-    padding: 10px 15px;
     border: 1px solid #ccc;
     display: inline-block;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 16px;
     background-color: #f8f9fa;
     color: #333;
 }
 
 .custom-file-upload:hover {
     background-color: #e2e6ea;
+}
+
+#uploadProgressoInput {
+    display: none;
+}
+
+.aviso {
+    text-align: center;
+    color: #888;
+    font-style: italic;
+    padding: 20px;
+    width: 100%;
+}
+
+.periodo-box {
+    background-color: #f0f0f5;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(33% - 20px);
+    min-width: 280px;
+    box-sizing: border-box;
+}
+
+.periodo-box h2 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #444;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 10px;
+}
+
+.lista-materias {
+    display: flex;
+    flex-direction: column;
+}
+
+.voltar-btn {
+    background-color: #6c757d !important;
+}
+
+.voltar-btn:hover {
+    background-color: #5a6268 !important;
+}
+
+/* Estilos para a barra de progresso */
+.progress-bar-container {
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.progress-bar-bg {
+    width: 100%;
+    height: 30px;
+    background-color: #e9ecef;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background-color: #28a745;
+    transition: width 0.4s ease-in-out;
+}
+
+.progress-text {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+    margin-top: 5px;
+}
+
+/* style.css */
+
+/* ... (código existente) ... */
+
+#adicionarQuebraBtn {
+    background-color: #ffc107 !important; /* Cor de alerta, como laranja */
+    color: #212529 !important;
+}
+
+#adicionarQuebraBtn:hover {
+    background-color: #e0a800 !important;
+}
+
+/* style.css */
+
+/* ... (código existente) ... */
+
+.quebra-requisito-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f0f5f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+#quebraMateriaSelect {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+}
+
+#confirmarQuebraBtn {
+    background-color: #ffc107;
+    color: #212529;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+#confirmarQuebraBtn:hover {
+    background-color: #e0a800;
+}
+
+.controles {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+    max-width: 600px;
+}
+
+/* style.css */
+
+/* ... (código existente) ... */
+
+/* Estilo para o novo botão */
+#ocultarFeitasBtn {
+    background-color: #6c757d;
+}
+
+#ocultarFeitasBtn:hover {
+    background-color: #5a6268;
+}
+
+/* Classe para ocultar matérias */
+.oculta {
+    display: none;
 }
