@@ -1,0 +1,131 @@
+// --- Seção 1: Base de Dados e Estado ---
+const matriz20s08 = [
+    // Primeiro Período
+    { codigo: 'MAT101', nome: 'Cálculo I', preRequisitos: [], periodo: 1 },
+    { codigo: 'GEO101', nome: 'Geometria Analítica e Álgebra Vetorial', preRequisitos: [], periodo: 1 },
+    { codigo: 'ING_I', nome: 'Inglês Instrumental I', preRequisitos: [], periodo: 1 },
+    { codigo: 'PORT_INST', nome: 'Português Instrumental', preRequisitos: [], periodo: 1 },
+    { codigo: 'PROG101', nome: 'Programação de Computadores I', preRequisitos: [], periodo: 1 },
+    { codigo: 'LAB_PROG101', nome: 'Lab. de Programação de Computadores I', preRequisitos: [], periodo: 1 },
+    { codigo: 'MET_CIE', nome: 'Metodologia Científica', preRequisitos: [], periodo: 1 },
+
+    // Segundo Período
+    { codigo: 'MAT102', nome: 'Cálculo II', preRequisitos: ['MAT101'], periodo: 2 },
+    { codigo: 'FIS101', nome: 'Física I', preRequisitos: ['MAT101'], periodo: 2 },
+    { codigo: 'FIL_TEC', nome: 'Filosofia da Tecnologia', preRequisitos: [], periodo: 2 },
+    { codigo: 'PROG102', nome: 'Programação de Computadores II', preRequisitos: ['PROG101', 'LAB_PROG101'], periodo: 2 },
+    { codigo: 'LAB_PROG102', nome: 'Lab. de Programação de Computadores II', preRequisitos: ['PROG101', 'LAB_PROG101'], periodo: 2 },
+    { codigo: 'LAB_SIS_DIG', nome: 'Lab. de Sistemas Digitais Para Computação', preRequisitos: ['PROG101', 'LAB_PROG101'], periodo: 2 },
+    { codigo: 'SIS_DIG', nome: 'Sistemas Digitais Para Computação', preRequisitos: ['PROG101', 'LAB_PROG101'], periodo: 2 },
+    { codigo: 'MAT_DISC', nome: 'Matemática Discreta', preRequisitos: [], periodo: 2 },
+    
+    // Terceiro Período
+    { codigo: 'MAT103', nome: 'Cálculo III', preRequisitos: ['MAT102', 'GEO101'], periodo: 3 },
+    { codigo: 'FIS102', nome: 'Física II', preRequisitos: ['FIS101', 'MAT102'], periodo: 3 },
+    { codigo: 'FE101', nome: 'Física Experimental I', preRequisitos: [], periodo: 3 },
+    { codigo: 'AED101', nome: 'Algoritmos e Estruturas de Dados I', preRequisitos: ['PROG102', 'LAB_PROG102'], periodo: 3 },
+    { codigo: 'LAB_AED101', nome: 'Lab. de Algoritmos e Estruturas de Dados I', preRequisitos: ['PROG102', 'LAB_PROG102'], periodo: 3 },
+    { codigo: 'ARQ_ORG_I', nome: 'Arquitetura e Organização de Computadores I', preRequisitos: ['SIS_DIG', 'LAB_SIS_DIG'], periodo: 3 },
+    { codigo: 'LAB_ARQ_ORG_I', nome: 'Lab. de Arquitetura e Organização de Computadores I', preRequisitos: ['SIS_DIG', 'LAB_SIS_DIG'], periodo: 3 },
+    { codigo: 'MET_NUM', nome: 'Métodos Numéricos Computacionais', preRequisitos: ['PROG101', 'LAB_PROG101', 'MAT103'], periodo: 3 },
+    
+    // Quarto Período
+    { codigo: 'FIS103', nome: 'Física III', preRequisitos: ['FIS102'], periodo: 4 },
+    { codigo: 'FE102', nome: 'Física Experimental II', preRequisitos: ['FE101'], periodo: 4 },
+    { codigo: 'AED102', nome: 'Algoritmos e Estruturas de Dados II', preRequisitos: ['AED101', 'LAB_AED101'], periodo: 4 },
+    { codigo: 'LAB_AED102', nome: 'Lab. de Algoritmos e Estruturas de Dados II', preRequisitos: ['AED101', 'LAB_AED101'], periodo: 4 },
+    { codigo: 'ARQ_ORG_II', nome: 'Arquitetura e Organização de Computadores II', preRequisitos: ['ARQ_ORG_I', 'LAB_ARQ_ORG_I'], periodo: 4 },
+    { codigo: 'LAB_ARQ_ORG_II', nome: 'Lab. de Arquitetura e Organização de Computadores II', preRequisitos: ['ARQ_ORG_I', 'LAB_ARQ_ORG_I'], periodo: 4 },
+    { codigo: 'LING_PROG', nome: 'Linguagens de Programação', preRequisitos: ['AED101', 'LAB_AED101'], periodo: 4 },
+    { codigo: 'LAB_LING_PROG', nome: 'Lab. de Linguagens de Programação', preRequisitos: ['AED101', 'LAB_AED101'], periodo: 4 },
+    { codigo: 'MAT104', nome: 'Cálculo IV', preRequisitos: ['MAT103'], periodo: 4 },
+
+    // Quinto Período
+    { codigo: 'ALG_LIN', nome: 'Álgebra Linear', preRequisitos: ['GEO101', 'MAT102'], periodo: 5 },
+    { codigo: 'BANCO_I', nome: 'Banco de Dados I', preRequisitos: ['AED102', 'LAB_AED102'], periodo: 5 },
+    { codigo: 'LAB_BANCO_I', nome: 'Lab. de Banco de Dados I', preRequisitos: ['AED102', 'LAB_AED102'], periodo: 5 },
+    { codigo: 'PRIN_COM_DADOS', nome: 'Princípios de Comunicação de Dados', preRequisitos: ['FIS103'], periodo: 5 },
+    { codigo: 'MODEL_SOFT', nome: 'Modelagem e Desenvolvimento de Software', preRequisitos: ['LING_PROG', 'LAB_LING_PROG'], periodo: 5 },
+    { codigo: 'LAB_MODEL_SOFT', nome: 'Lab. de Modelagem e Desenvolvimento de Software', preRequisitos: ['LING_PROG', 'LAB_LING_PROG'], periodo: 5 },
+    { codigo: 'LING_FORM', nome: 'Linguagens Formais e Autômatos', preRequisitos: ['MAT_DISC', 'LING_PROG', 'LAB_LING_PROG'], periodo: 5 },
+
+    // Sexto Período
+    { codigo: 'ENG_SOFT_I', nome: 'Engenharia de Software I', preRequisitos: ['MODEL_SOFT'], periodo: 6 },
+    { codigo: 'LAB_ENG_SOFT_I', nome: 'Lab. de Engenharia de Software I', preRequisitos: ['MODEL_SOFT', 'LAB_MODEL_SOFT'], periodo: 6 },
+    { codigo: 'REDES_I', nome: 'Redes de Computadores I', preRequisitos: ['PRIN_COM_DADOS'], periodo: 6 },
+    { codigo: 'LAB_REDES_I', nome: 'Lab. de Redes de Computadores I', preRequisitos: ['PRIN_COM_DADOS'], periodo: 6 },
+    { codigo: 'SIST_OP', nome: 'Sistemas Operacionais', preRequisitos: ['ARQ_ORG_II', 'LAB_ARQ_ORG_II'], periodo: 6 },
+    { codigo: 'LAB_SIST_OP', nome: 'Lab. de Sistemas Operacionais', preRequisitos: ['ARQ_ORG_II', 'LAB_ARQ_ORG_II'], periodo: 6 },
+    { codigo: 'CONT_SIS_DIN', nome: 'Controle de Sistemas Dinâmicos', preRequisitos: ['MET_NUM'], periodo: 6 },
+    { codigo: 'LAB_CONT_SIS_DIN', nome: 'Lab. de Controle de Sistemas Dinâmicos', preRequisitos: ['MET_NUM'], periodo: 6 },
+
+    // Sétimo Período
+    { codigo: 'IA', nome: 'Inteligência Artificial', preRequisitos: ['ALG_LIN', 'AED102', 'LAB_AED102', 'MET_NUM'], periodo: 7 },
+    { codigo: 'LAB_IA', nome: 'Lab. de Inteligência Artificial', preRequisitos: ['AED102', 'LAB_AED102'], periodo: 7 },
+    { codigo: 'COMPILADORES', nome: 'Compiladores', preRequisitos: ['AED102', 'LAB_AED102', 'LING_FORM', 'LING_PROG', 'LAB_LING_PROG'], periodo: 7 },
+    { codigo: 'Otim_I', nome: 'Otimização I', preRequisitos: ['ALG_LIN', 'AED102', 'LAB_AED102', 'MET_NUM'], periodo: 7 },
+    { codigo: 'CONT_DIG', nome: 'Controle Digital de Sistemas Dinâmicos', preRequisitos: ['CONT_SIS_DIN', 'LAB_CONT_SIS_DIN'], periodo: 7 },
+    { codigo: 'LAB_CONT_DIG', nome: 'Lab. de Controle Digital de Sistemas Dinâmicos', preRequisitos: ['CONT_SIS_DIN', 'LAB_CONT_SIS_DIN'], periodo: 7 },
+    { codigo: 'PSIC_APL_ORG', nome: 'Psicologia Aplicada às Organizações', preRequisitos: [], periodo: 7 },
+
+    // Oitavo Período
+    { codigo: 'INTER_HUM_COMP', nome: 'Interação Humano-Computador', preRequisitos: ['MODEL_SOFT', 'LAB_MODEL_SOFT'], periodo: 8 },
+    { codigo: 'SIS_DIST', nome: 'Sistemas Distribuídos', preRequisitos: ['SIST_OP', 'LAB_SIST_OP'], periodo: 8 },
+    { codigo: 'OTIM_II', nome: 'Otimização II', preRequisitos: ['Otim_I'], periodo: 8 },
+    { codigo: 'IC_I', nome: 'Inteligência Computacional I', preRequisitos: ['IA', 'LAB_IA'], periodo: 8 },
+    { codigo: 'COMP_GRAF', nome: 'Computação Gráfica', preRequisitos: ['PROG101', 'LAB_PROG101', 'GEO101', 'MAT102'], periodo: 8 },
+    { codigo: 'INTRO_ADM', nome: 'Introdução à Administração', preRequisitos: [], periodo: 8 },
+
+    // Nono Período
+    { codigo: 'TCC1', nome: 'Trabalho de Conclusão de Curso I', preRequisitos: [], periodo: 9 },
+    { codigo: 'ORG_EMP_A', nome: 'Organização Empresarial A', preRequisitos: [], periodo: 9 },
+    { codigo: 'MET_PESQ', nome: 'Metodologia de Pesquisa', preRequisitos: [], periodo: 9 },
+
+    // Décimo Período
+    { codigo: 'TCC2', nome: 'Trabalho de Conclusão de Curso II', preRequisitos: ['TCC1'], periodo: 10 },
+    { codigo: 'ESTAGIO', nome: 'Estágio Supervisionado', preRequisitos: [], periodo: 10 },
+    { codigo: 'CONTEXTO_PROF', nome: 'Contexto Social e Profissional da Engenharia de Computação', preRequisitos: [], periodo: 10 },
+    { codigo: 'INTRO_SOCIO', nome: 'Introdução à Sociologia', preRequisitos: [], periodo: 10 },
+    
+    // Optativas
+    { codigo: 'COMP_EVOL', nome: 'Computação Evolucionária', preRequisitos: ['IA', 'LAB_IA'], periodo: 'Optativas' },
+    { codigo: 'MODEL_SIS_DIN', nome: 'Modelagem de Sistemas Dinâmicos', preRequisitos: ['MET_NUM', 'MAT104'], periodo: 'Optativas' },
+    { codigo: 'INST', nome: 'Instrumentação', preRequisitos: ['FIS103'], periodo: 'Optativas' },
+    { codigo: 'LAB_INST', nome: 'Laboratório de Instrumentação', preRequisitos: ['INST'], periodo: 'Optativas' },
+    { codigo: 'LIBRAS', nome: 'Introdução à Língua Brasileira de Sinais - Libras', preRequisitos: [], periodo: 'Optativas' },
+    { codigo: 'BANCO_II', nome: 'Banco de Dados II', preRequisitos: ['BANCO_I', 'LAB_BANCO_I'], periodo: 'Optativas' },
+    { codigo: 'INTRO_DIR', nome: 'Introdução ao Direito', preRequisitos: [], periodo: 'Optativas' },
+    { codigo: 'ING_II', nome: 'Inglês Instrumental II', preRequisitos: ['ING_I'], periodo: 'Optativas' },    
+    { codigo: 'INTRO_ECO', nome: 'Introdução à Economia', preRequisitos: [], periodo: 'Optativas'},
+    { codigo: 'GEST_AMB', nome: 'Gestão Ambiental', preRequisitos: [], periodo: 'Optativas'}
+
+/*
+
+,
+    { codigo: 'AUTO_PROC_MAN', nome: 'Automação de Processos de Manufatura', preRequisitos: ['AUTO_PROC_CONT', 'LAB_AUTO_PROC_CONT'], periodo: 'Optativas' },
+    { codigo: 'SIST_BIO_INSP', nome: 'Sistemas Bio-Inspirados', preRequisitos: ['IA', 'LAB_IA'], periodo: 'Optativas' },
+    { codigo: 'ING_III', nome: 'Inglês Instrumental III', preRequisitos: ['ING_II'], periodo:'Optativas' },
+    { codigo: 'SIST_MULTIMIDIA', nome: 'Sistemas Multimídia', preRequisitos: ['COMP_GRAF'], periodo: 'Optativas'},
+    { codigo: 'ROBOTICA', nome: 'Robótica', preRequisitos: ['FIS102', 'CONT_SIS_DIN', 'LAB_CONT_SIS_DIN'], periodo: 'Optativas' },
+    { codigo: 'SIST_TEMPO_REAL', nome: 'Sistemas de Tempo Real', preRequisitos: ['MODEL_SOFT', 'LAB_MODEL_SOFT', 'SIS_DIST'], periodo: 'Optativas' },
+    { codigo: 'IC_II', nome: 'Inteligência Computacional II', preRequisitos: ['IA', 'LAB_IA'], periodo:'Optativas' },
+    { codigo: 'LAB_AUT_PROC_CONT', nome: 'Lab. de Automação de Processos Contínuos', preRequisitos: ['CONT_SIS_DIN', 'LAB_CONT_SIS_DIN'], periodo: 'Optativas' },
+    { codigo: 'AUT_PROC_CONT', nome: 'Automação de Processos Contínuos', preRequisitos: ['CONT_SIS_DIN', 'LAB_CONT_SIS_DIN'], periodo: 'Optativas' },
+    { codigo: 'EDU_CORP', nome: 'Educação Corporal e Formação Humana', preRequisitos: [], periodo: 'Optativas' }
+
+
+
+
+
+
+
+
+
+*/
+
+
+
+
+
+
+];

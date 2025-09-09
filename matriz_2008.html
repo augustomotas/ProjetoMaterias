@@ -1,68 +1,67 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Meu Progresso Acadêmico - Matriz 2008</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="pageContainer" class="page-container">
+      <header>
+        <button onclick="window.location.href='index.html'" class="voltar-btn">
+          Voltar
+        </button>
         <h1>Matriz Curricular de 2008</h1>
-        <button onclick="window.location.href='index.html'" class="voltar-btn">Voltar</button>
-            
-    </header>
+      </header>
 
-    <main>
-        
-        
-        <div>
+      <main>
+        <div class="progress-bar-container">
+          <h2>Progresso das Matérias Obrigatórias</h2>
+          <div class="progress-bar-bg">
+            <div id="progressBar" class="progress-bar"></div>
+          </div>
+          <span id="progressText" class="progress-text">0%</span>
+        </div>
+
         <div class="contagem-container">
-            <p>Matérias Concluídas: <span id="materiasConcluidas">0</span></p>
-            <p>Matérias Restantes: <span id="materiasRestantes">0</span></p>
-            <div class="controles">
-            <button id="ocultarFeitasBtn">Ocultar Feitas</button>
-            </div>
+          <p>Matérias Concluídas: <span id="materiasConcluidas">0</span></p>
+          <p>Matérias Restantes: <span id="materiasRestantes">0</span></p>
         </div>
-        <div class="quebra-requisito-container">
-            <p>Quebrar pré-requisito:</p>
-            <select id="quebraMateriaSelect">
-                <option value="">Selecione uma matéria</option>
-            </select>
-            <button id="confirmarQuebraBtn">Confirmar</button>
-        </div>
-</div>
-        
 
-        
-            
-        
-        <section class="materias-container">
-            </section>
-            </div>
-    </main>
-    <div class="progress-bar-container">
-            <h2>Progresso das Matérias Obrigatórias</h2>
-            <div class="progress-bar-bg">
-                <div id="progressBar" class="progress-bar"></div>
-            </div>
-            <span id="progressText" class="progress-text">0%</span>
+        <div class="controles">
+          <button id="ocultarFeitasBtn">Ocultar Feitas</button>
         </div>
-<div class="hamburger-icon" id="hamburgerIcon" class="controles">
-                <span></span>
-                <span></span>
-                <span></span>
+
+        <section class="materias-container"></section>
+
+        <div class="quebra-requisito-container">
+          <p>Quebrar pré-requisito:</p>
+          <select id="quebraMateriaSelect">
+            <option value="">Selecione uma matéria</option>
+          </select>
+          <button id="confirmarQuebraBtn">Confirmar</button>
         </div>
+
+        <div class="controles">
+          <div class="hamburger-icon" id="hamburgerIcon">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </main>
+    </div>
 
     <nav id="hamburgerMenu" class="hamburger-menu">
-        <button class="close-btn" id="closeMenuBtn">×</button>
-        <button id="baixarProgressoBtn">Baixar Progresso</button>
-        <label for="uploadProgressoInput" class="custom-file-upload">
-            Fazer Upload do Progresso
-        </label>
-        <input type="file" id="uploadProgressoInput" accept=".json" />
+      <button class="close-btn" id="closeMenuBtn">×</button>
+      <button id="baixarProgressoBtn">Baixar Progresso</button>
+      <label for="uploadProgressoInput" class="custom-file-upload">
+        Fazer Upload do Progresso
+      </label>
+      <input type="file" id="uploadProgressoInput" accept=".json" />
     </nav>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
