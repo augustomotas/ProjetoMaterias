@@ -15,7 +15,7 @@ body {
 /* Media Query para dispositivos menores */
 @media (max-width: 768px) {
     header h1 {
-        font-size: 1.8em;
+        font-size: 1.9em;
         text-align: center;
             padding-top: 20%;
     }
@@ -502,3 +502,23 @@ body a.matriz-btn:hover {
 #limparSelecaoBtn:hover {   
     background-color: #c82333;
 }
+
+/* ======================================================= */
+/* === CORREÇÃO PARA REMOVER A BARRA DE ROLAGEM NA INDEX === */
+/* ======================================================= */
+
+body.index-page {
+    margin: 0;
+}
+
+footer p{
+    color: #f0f0f5a6;
+    text-align: center;
+    padding: 10px 20px;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1;
+    margin-top: auto;
+    /* Empurra o rodapé para o final da página */
+    font-size: 0.9em;}
