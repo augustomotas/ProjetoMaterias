@@ -1,92 +1,74 @@
-/* Estilos Gerais */
+/* ======================================================= */
+/* === RESET FUNDAMENTAL DO BOX MODEL === */
+/* ======================================================= */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* ======================================================= */
+/* === ESTILOS GERAIS === */
+/* ======================================================= */
 body {
     font-family: Arial, sans-serif;
     background-color: #1A202C;
     color: #f0f0f5;
     min-height: 100vh;
-    box-sizing: border-box;
     overflow-x: hidden;
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 0;
 }
 
-/* Media Query para dispositivos menores */
-@media (max-width: 768px) {
-    header h1 {
-        font-size: 1.9em;
-        text-align: center;
-            padding-top: 20%;
-    }
-
-    .materias-container {
-        flex-direction: column;
-        /* Faz os períodos ficarem em coluna */
-        gap: 15px;
-    }
-
-    .periodo-box {
-        flex: 1 1 100%;
-        min-width: 100%;
-    }
-
-    .controles {
-        flex-direction: column;
-        align-items: center;
-    }
-}
-/* MODIFICADO: Agora este container centraliza tudo */
-/* CORREÇÃO DEFINITIVA DE CENTRALIZAÇÃO */
+/* ======================================================= */
+/* === CONTAINER PRINCIPAL DA PÁGINA === */
+/* ======================================================= */
 .page-container {
+    overflow-x: hidden;
     width: 100%;
-    /* Define uma largura máxima para o conteúdo não ficar largo demais em desktops */
     max-width: 960px;
-    /* Margens verticais (em cima/em baixo) de 0, 
-       margens horizontais (esquerda/direita) automáticas para forçar a centralização */
     margin: 0 auto;
-
     padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
     z-index: 1;
-    /* A linha de transition foi removida daqui pois deve ficar na regra .page-container.menu-open */
 }
 
 .page-container.menu-open {
     transform: translateX(250px);
 }
 
-/* MODIFICADO: Removida a margem automática */
-main {
-    width: 100%;
-    max-width: 960px;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* margin: 0 auto; FOI REMOVIDA */
-}
-
-/* Estilos do Cabeçalho e Botão de Voltar */
-/* MODIFICADO: Removida a margem automática */
+/* ======================================================= */
+/* === CABEÇALHO (HEADER) === */
+/* ======================================================= */
 header {
     justify-content: center;
     width: 100%;
     display: flex;
     align-items: center;
     max-width: 960px;
-    /* Padding removido para alinhar com o conteúdo principal */
-    box-sizing: border-box;
     margin-bottom: 20px;
-    /* margin: 0 auto... FOI REMOVIDA */
+    padding-top: 7%;
 }
 
-body.index-page header {
-    padding-top: 12%;
+body h1,
+body h2,
+body p {
+    color: #FFFFFF;
 }
+
+.bttvoltar {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+}
+
 .voltar-btn {
     background-color: #6c757d;
     padding: 8px 12px;
@@ -96,15 +78,23 @@ body.index-page header {
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.2s ease;
-    flex-shrink: 0;
-    /* Impede que o botão encolha */
 }
 
 .voltar-btn:hover {
     background-color: #5a6268;
 }
 
-/* Estilos da barra de progresso e contagem */
+/* ======================================================= */
+/* === CONTEÚDO PRINCIPAL (MAIN) === */
+/* ======================================================= */
+main {
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .progress-bar-container,
 .contagem-container {
     width: 100%;
@@ -151,7 +141,9 @@ body.index-page header {
     color: #007bff;
 }
 
-/* Estilos dos Controles Principais */
+/* ======================================================= */
+/* === CONTROLES E BOTÕES === */
+/* ======================================================= */
 .controles {
     margin-bottom: 20px;
     display: flex;
@@ -162,11 +154,9 @@ body.index-page header {
     max-width: 600px;
 }
 
-.controles button,
-.controles .hamburger-icon {
+.controles button {
     padding: 10px 15px;
     border: none;
-    background-color: #007bff;
     color: white;
     cursor: pointer;
     border-radius: 5px;
@@ -174,28 +164,154 @@ body.index-page header {
     transition: background-color 0.2s ease;
 }
 
-.controles button:hover,
-.controles .hamburger-icon:hover {
-    background-color: #0056b3;
+.controles button:hover {
+    filter: brightness(0.9);
 }
 
 #ocultarFeitasBtn {
     background-color: #6c757d;
 }
 
-#ocultarFeitasBtn:hover {
-    background-color: #5a6268;
+#limparSelecaoBtn {
+    background-color: #dc3545;
 }
 
-/* Estilos do Menu Hambúrguer */
+#limparSelecaoBtn:hover {
+    background-color: #c82333;
+}
+
+/* ======================================================= */
+/* === CONTAINER DE MATÉRIAS (PERÍODOS) === */
+/* ======================================================= */
+.materias-container {
+    background-color: rgba(10, 19, 36, 0.847);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.periodo-box {
+    background-color: #f0f0f5fb;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(33% - 20px);
+    min-width: 280px;
+}
+
+.periodo-box h2 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #444;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 10px;
+}
+
+.lista-materias {
+    color: rgb(32, 32, 32);
+    display: flex;
+    flex-direction: column;
+}
+
+.materia-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.materia-item:last-child {
+    border-bottom: none;
+}
+
+input[type="checkbox"] {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.materia-item.bloqueada {
+    color: #999;
+    opacity: 0.6;
+}
+
+.materia-item.concluida {
+    text-decoration: line-through;
+    color: #5cb85c;
+}
+
+/* ======================================================= */
+/* === BOTÕES INFERIORES (QUEBRA DE REQUISITO E MENU) === */
+/* ======================================================= */
+.endbuttons {
+    display: flex;
+    align-items: center;
+    /* CORRIGIDO: de "align-item" para "align-items" */
+    gap: 15px;
+    width: 100%;
+    max-width: 600px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.quebra-requisito-container {
+    background-color: #e9ecef;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-grow: 1;
+    margin-bottom: 4%;
+    /* Faz ocupar o espaço disponível */
+}
+
+.endbuttons .controles {
+    width: auto;
+    /* Tamanho automático para caber apenas o ícone */
+    flex-grow: 0;
+    margin: 0;
+}
+
+#quebraMateriaSelect {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+}
+
+#confirmarQuebraBtn {
+    background-color: #ffc107;
+    color: #212529;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.2s ease;
+}
+
+#confirmarQuebraBtn:hover {
+    background-color: #e0a800;
+}
+
 .hamburger-icon {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     padding: 5px;
     cursor: pointer;
+    background-color: #007bff;
+    border-radius: 5px;
 }
 
 .hamburger-icon span {
@@ -206,6 +322,9 @@ body.index-page header {
     border-radius: 2px;
 }
 
+/* ======================================================= */
+/* === MENU HAMBÚRGUER (PAINEL LATERAL) === */
+/* ======================================================= */
 .hamburger-menu {
     position: fixed;
     top: 0;
@@ -255,190 +374,13 @@ body.index-page header {
     margin-bottom: 20px;
 }
 
-.hamburger-menu .close-btn:hover {
-    color: #ccc;
-    background-color: transparent;
-}
-
 #uploadProgressoInput {
     display: none;
 }
 
-/* Estilos do Container de Quebra de Pré-requisito */
-.quebra-requisito-container {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    padding: 15px;
-    background-color: #e9ecef;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 600px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-}
-
-#quebraMateriaSelect {
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    font-size: 1em;
-}
-
-#confirmarQuebraBtn {
-    background-color: #ffc107;
-    color: #212529;
-    padding: 8px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1em;
-    transition: background-color 0.2s ease;
-}
-
-#confirmarQuebraBtn:hover {
-    background-color: #e0a800;
-}
-
-/* Estilos do Container de Matérias */
-.materias-container {
-    background-color: rgba(10, 19, 36, 0.847);
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-}
-
-.periodo-box {
-    background-color: #f0f0f5fb;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
-    flex: 1 1 calc(33% - 20px);
-    min-width: 280px;
-    box-sizing: border-box;
-}
-
-.periodo-box h2 {
-    text-align: center;
-    margin-top: 0;
-    margin-bottom: 15px;
-    color: #444;
-    border-bottom: 2px solid #ccc;
-    padding-bottom: 10px;
-}
-
-.lista-materias {
-    color: rgb(32, 32, 32);
-    display: flex;
-    flex-direction: column;
-}
-
-.materia-item {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid #eee;
-}
-
-.materia-item:last-child {
-    border-bottom: none;
-}
-
-input[type="checkbox"] {
-    margin-right: 10px;
-    cursor: pointer;
-}
-
-.materia-item.bloqueada {
-    color: #999;
-    opacity: 0.6;
-}
-
-.materia-item.concluida {
-    text-decoration: line-through;
-    color: #5cb85c;
-}
-
-.aviso {
-    text-align: center;
-    color: #888;
-    font-style: italic;
-    padding: 20px;
-    width: 100%;
-}
-
-
-/* Garante a centralização TOTAL (vertical e horizontal) da página */
-body.index-page .page-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    /* ESSENCIAL para centralizar verticalmente */
-    align-items: center;
-    /* ESSENCIAL para centralizar horizontalmente */
-    min-height: 100vh;
-    /* ESSENCIAL para ocupar a altura da tela */
-    text-align: center;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-/* Estiliza o título principal */
-@media (min-width: 768px) {
-    body.index-page h1 {
-    font-size: 2.8em;        /* Tamanho menor em telas pequenas */
-    }
-}
-body.index-page h1 {
-    font-weight: bold;
-    margin-bottom: 40px;
-}
-
-/* Transforma os links em BOTÕES ESTILIZADOS */
-body.index-page a {
-    display: flex;
-    background-color: #007bff;
-    color: white;
-    font-size: 1.3em;
-    font-weight: bold;
-    text-decoration: none;
-    padding: 15px 40px;
-    margin: 10px;
-    border-radius: 8px;
-    border: none;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
-    min-width: 220px;
-}
-
-/* Adiciona um efeito de "levantar" ao passar o mouse */
-body.index-page a:hover {
-    background-color: #005aba;
-    transform: translateY(-3px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
-
-.matriz-btn{
-        flex-direction: column;
-        /* Empilha os itens verticalmente */
-        align-items: center;
-        /* Centraliza os itens horizontalmente */
-        justify-content: center;
-}
-
-/* =================================================================== */
-/* === CÓDIGO ADICIONAL PARA O FUNDO DE PARTÍCULAS (NÃO ALTERAR O RESTO) === */
-/* =================================================================== */
-
-/* 1. Define o posicionamento do container das partículas */
-/* Esta regra é nova e não conflita com nada. */
+/* ======================================================= */
+/* === ESTILOS DA PÁGINA INDEX (ESCOLHA DE MATRIZ) === */
+/* ======================================================= */
 .particles-container {
     position: absolute;
     top: 0;
@@ -446,79 +388,88 @@ body.index-page a:hover {
     width: 100%;
     height: 100%;
     z-index: -1;
-    /* Joga para trás do conteúdo do body */
 }
-
-/* 2. Sobrescreve a cor de fundo APENAS para a página de escolha */
-/* O seletor "body.index-page" é mais específico que "body", então ele vence. */
-body {
-}
-
-/* 3. Sobrescreve a cor do título APENAS para a página de escolha */
-/* Como a especificidade é a mesma da regra original, esta vence por estar no final do arquivo. */
-body h1,h2,p {
-    color: #FFFFFF;
-}
-
-/* 4. Sobrescreve as cores dos botões para combinar com o fundo escuro */
-/* Também vence por estar no final do arquivo. */
-body a.matriz-btn {
-    background-color: #4FD1C5;
-    /* Cor ciano, igual às partículas */
-    color: #1A202C;
-    /* Texto escuro para bom contraste no botão claro */
-}
-
-body a.matriz-btn:hover {
-    background-color: #38B2AC;
-    /* Tom mais escuro de ciano */
-}
-
-/* Bônus: Garante que a estrutura principal fique à frente se necessário. */
-/* O z-index:-1 nas partículas já deve resolver, mas isso garante. */
-.page-container {
-    position: relative;
-    z-index: 1;
-}
-
-.endbuttons {
-    justify-content: center;
-        display: flex;
-        align-items: anchor-center;
-    
-}
-
-.bttvoltar{
-    position: absolute;
-    top: 20px;
-    left: 20px;
-}
-
-/* Estilo para o novo botão de Limpar Seleção */
-#limparSelecaoBtn {
-    background-color: #dc354678;
-}
-
-#limparSelecaoBtn:hover {   
-    background-color: #c82333;
-}
-
-/* ======================================================= */
-/* === CORREÇÃO PARA REMOVER A BARRA DE ROLAGEM NA INDEX === */
-/* ======================================================= */
 
 body.index-page {
-    margin: 0;
+    display: flex;
+    flex-direction: column;
 }
 
-footer p{
+body.index-page .page-container {
+    justify-content: center;
+    flex-grow: 1;
+}
+
+body.index-page h1 {
+    font-weight: bold;
+    margin-bottom: 40px;
+}
+
+body.index-page a.matriz-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #4FD1C5;
+    color: #1A202C;
+    font-size: 1.3em;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 15px 40px;
+    margin: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s, transform 0.2s;
+    min-width: 220px;
+}
+
+body.index-page a.matriz-btn:hover {
+    background-color: #38B2AC;
+    transform: translateY(-3px);
+}
+
+footer p {
     color: #f0f0f5a6;
     text-align: center;
     padding: 10px 20px;
-    width: 100%;
-    box-sizing: border-box;
-    position: relative;
-    z-index: 1;
-    margin-top: auto;
-    /* Empurra o rodapé para o final da página */
-    font-size: 0.9em;}
+    flex-shrink: 0;
+    /* Impede o rodapé de encolher */
+    font-size: 0.9em;
+}
+h1 {
+    font-size: 2.8em;
+}
+
+
+.index-page {
+    padding-top: 5%;
+}
+
+/* ======================================================= */
+/* === RESPONSIVIDADE (MEDIA QUERIES) - IMPORTANTE ESTAR NO FINAL === */
+/* ======================================================= */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2.2em;
+        text-align: center;
+    }
+.index-page {
+    padding-top: 27%;
+}
+
+    .materias-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .periodo-box {
+        flex-basis: 100%;
+        min-width: 100%;
+    }
+
+    .controles {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
