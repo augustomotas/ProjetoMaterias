@@ -76,17 +76,15 @@ header {
     display: flex;
     align-items: center;
     max-width: 960px;
-    padding: 0;
     /* Padding removido para alinhar com o conteúdo principal */
     box-sizing: border-box;
     margin-bottom: 20px;
     /* margin: 0 auto... FOI REMOVIDA */
 }
 
-header h1 {
-    margin: 0;
+body.index-page header {
+    padding-top: 15%;
 }
-
 .voltar-btn {
     background-color: #6c757d;
     padding: 8px 12px;
