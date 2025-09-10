@@ -497,6 +497,12 @@ body a.matriz-btn:hover {
     z-index: 1;
 }
 
+.endbuttons {
+    justify-content: center;
+        display: flex;
+        align-items: anchor-center;
+    
+}
 
 .bttvoltar{
     position: absolute;
@@ -504,40 +510,3 @@ body a.matriz-btn:hover {
     left: 20px;
 }
 
-/* ======================================================= */
-/* === CORREÇÃO FINAL PARA ALINHAMENTO DOS BOTÕES INFERIORES === */
-/* ======================================================= */
-
-/* 1. Ajusta o container PAI para alinhar os itens corretamente */
-.endbuttons {
-    display: flex;
-    /* Alinha os itens verticalmente ao centro (o seu estava com valor inválido) */
-    align-items: center;
-    /* Cria um espaço entre os dois itens */
-    gap: 15px;
-
-    /* Faz este container se comportar como os outros blocos */
-    width: 100%;
-    max-width: 600px;
-    /* Usa o mesmo max-width dos outros containers */
-    justify-content: center;
-    /* Centraliza o conjunto */
-}
-
-/* 2. Faz a caixa "Quebrar pré-requisito" ocupar o espaço flexível */
-.quebra-requisito-container {
-    /* Permite que este item cresça e ocupe o espaço disponível */
-    flex-grow: 1;
-    /* Remove a largura fixa para que seja flexível */
-    width: auto;
-    max-width: none;
-    /* Remove a largura máxima para que ele possa preencher */
-}
-
-/* 3. Faz o container do menu hambúrguer ter o tamanho exato do ícone */
-.endbuttons .controles {
-    /* Remove a largura de 100% APENAS deste container de controles específico */
-    width: auto;
-    /* Remove a capacidade de crescer */
-    flex-grow: 0;
-}
