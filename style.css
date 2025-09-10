@@ -1,7 +1,7 @@
 /* Estilos Gerais */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
+    background-color: #1A202C;
     color: #333;
     min-height: 100vh;
     box-sizing: border-box;
@@ -38,6 +38,7 @@ main {
 /* Estilos do Cabeçalho e Botão de Voltar */
 /* MODIFICADO: Removida a margem automática */
 header {
+    justify-content: center;
     width: 100%;
     display: flex;
     align-items: center;
@@ -77,7 +78,7 @@ header h1 {
     max-width: 600px;
     margin-bottom: 20px;
     text-align: center;
-    background-color: #fff;
+    background-color: #0a1324d8;
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -103,7 +104,7 @@ header h1 {
     display: block;
     font-size: 1em;
     font-weight: bold;
-    color: #333;
+    color: #fff;
     margin-top: 10px;
 }
 
@@ -124,7 +125,7 @@ header h1 {
     justify-content: center;
     flex-wrap: wrap;
     gap: 10px;
-    width: 100%;
+    width: 17%;
     max-width: 600px;
 }
 
@@ -271,7 +272,7 @@ header h1 {
 
 /* Estilos do Container de Matérias */
 .materias-container {
-    background-color: #fff;
+    background-color: rgba(10, 19, 36, 0.847);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -282,7 +283,7 @@ header h1 {
 }
 
 .periodo-box {
-    background-color: #f0f0f5;
+    background-color: #f0f0f5fb;
     padding: 20px;
     border-radius: 8px;
     box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
@@ -381,15 +382,14 @@ body.index-page h1 {
     font-size: 2.8em;
     font-weight: bold;
     margin-bottom: 40px;
-    color: #343a40;
 }
 
 /* Transforma os links em BOTÕES ESTILIZADOS */
 body.index-page a {
-    display: inline-block;
+    display: flex;
     background-color: #007bff;
     color: white;
-    font-size: 1.2em;
+    font-size: 1.3em;
     font-weight: bold;
     text-decoration: none;
     padding: 15px 40px;
@@ -403,7 +403,76 @@ body.index-page a {
 
 /* Adiciona um efeito de "levantar" ao passar o mouse */
 body.index-page a:hover {
-    background-color: #0056b3;
+    background-color: #005aba;
     transform: translateY(-3px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.matriz-btn{
+        flex-direction: column;
+        /* Empilha os itens verticalmente */
+        align-items: center;
+        /* Centraliza os itens horizontalmente */
+        justify-content: center;
+}
+
+/* =================================================================== */
+/* === CÓDIGO ADICIONAL PARA O FUNDO DE PARTÍCULAS (NÃO ALTERAR O RESTO) === */
+/* =================================================================== */
+
+/* 1. Define o posicionamento do container das partículas */
+/* Esta regra é nova e não conflita com nada. */
+.particles-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    /* Joga para trás do conteúdo do body */
+}
+
+/* 2. Sobrescreve a cor de fundo APENAS para a página de escolha */
+/* O seletor "body.index-page" é mais específico que "body", então ele vence. */
+body {
+}
+
+/* 3. Sobrescreve a cor do título APENAS para a página de escolha */
+/* Como a especificidade é a mesma da regra original, esta vence por estar no final do arquivo. */
+body h1,h2,p {
+    color: #FFFFFF;
+}
+
+/* 4. Sobrescreve as cores dos botões para combinar com o fundo escuro */
+/* Também vence por estar no final do arquivo. */
+body a.matriz-btn {
+    background-color: #4FD1C5;
+    /* Cor ciano, igual às partículas */
+    color: #1A202C;
+    /* Texto escuro para bom contraste no botão claro */
+}
+
+body a.matriz-btn:hover {
+    background-color: #38B2AC;
+    /* Tom mais escuro de ciano */
+}
+
+/* Bônus: Garante que a estrutura principal fique à frente se necessário. */
+/* O z-index:-1 nas partículas já deve resolver, mas isso garante. */
+.page-container {
+    position: relative;
+    z-index: 1;
+}
+
+.endbuttons {
+    justify-content: center;
+        display: flex;
+        align-items: anchor-center;
+    
+}
+
+.bttvoltar{
+    position: absolute;
+    top: 20px;
+    left: 20px;
 }

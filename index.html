@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body class="index-page">
+    <div id="particles-background" class="particles-container"></div>
+
     <header>
       <h1>Escolha a Matriz Curricular</h1>
     </header>
@@ -15,5 +17,46 @@
       <a href="matriz_2008.html" class="matriz-btn">Matriz de 2008</a>
       <a href="matriz_2023.html" class="matriz-btn">Matriz de 2023</a>
     </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.9.3/tsparticles.bundle.min.js"></script>
+
+    <script>
+      // Aguarda o conteúdo da página ser carregado
+      window.addEventListener("load", () => {
+        // Configuração das partículas (baseada na sua versão dark-mode)
+        const particleConfig = {
+          fpsLimit: 60,
+          particles: {
+            number: { value: 60, density: { enable: true, value_area: 800 } },
+            shape: { type: "circle" },
+            opacity: { value: 0.5, random: true },
+            size: { value: 3, random: true },
+            move: {
+              enable: true,
+              speed: 1,
+              direction: "none",
+              out_mode: "out",
+              bounce: false,
+            },
+            color: {
+              value: "#4FD1C5", // Cor ciano do seu tema escuro
+            },
+            line_linked: {
+              enable: true,
+              distance: 150,
+              opacity: 0.4,
+              width: 1,
+              color: {
+                value: "#4FD1C5", // Cor ciano do seu tema escuro
+              },
+            },
+          },
+          detectRetina: true,
+        };
+
+        // Carrega as partículas no container com o ID "particles-background"
+        tsParticles.load("particles-background", particleConfig);
+      });
+    </script>
   </body>
 </html>

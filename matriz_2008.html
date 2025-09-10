@@ -8,16 +8,18 @@
   </head>
   <body>
     <div id="pageContainer" class="page-container">
-      <header>
+      <div class="bttvoltar">
         <button onclick="window.location.href='index.html'" class="voltar-btn">
           Voltar
         </button>
+      </div>
+      <header>
         <h1>Matriz Curricular de 2008</h1>
       </header>
 
       <main>
         <div class="progress-bar-container">
-          <h2>Progresso das Matérias Obrigatórias</h2>
+          <h2>Integralização das Matérias Obrigatórias</h2>
           <div class="progress-bar-bg">
             <div id="progressBar" class="progress-bar"></div>
           </div>
@@ -34,20 +36,21 @@
         </div>
 
         <section class="materias-container"></section>
+        <div class="endbuttons">
+          <div class="quebra-requisito-container">
+            <p style="color: black">Quebrar pré-requisito:</p>
+            <select id="quebraMateriaSelect">
+              <option value="">Selecione uma matéria</option>
+            </select>
+            <button id="confirmarQuebraBtn">Confirmar</button>
+          </div>
 
-        <div class="quebra-requisito-container">
-          <p>Quebrar pré-requisito:</p>
-          <select id="quebraMateriaSelect">
-            <option value="">Selecione uma matéria</option>
-          </select>
-          <button id="confirmarQuebraBtn">Confirmar</button>
-        </div>
-
-        <div class="controles">
-          <div class="hamburger-icon" id="hamburgerIcon">
-            <span></span>
-            <span></span>
-            <span></span>
+          <div class="controles">
+            <div class="hamburger-icon" id="hamburgerIcon">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
           </div>
         </div>
       </main>
@@ -63,5 +66,45 @@
     </nav>
 
     <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.9.3/tsparticles.bundle.min.js"></script>
+
+    <script>
+      // Aguarda o conteúdo da página ser carregado
+      window.addEventListener("load", () => {
+        // Configuração das partículas (baseada na sua versão dark-mode)
+        const particleConfig = {
+          fpsLimit: 60,
+          particles: {
+            number: { value: 60, density: { enable: true, value_area: 800 } },
+            shape: { type: "circle" },
+            opacity: { value: 0.5, random: true },
+            size: { value: 3, random: true },
+            move: {
+              enable: true,
+              speed: 1,
+              direction: "none",
+              out_mode: "out",
+              bounce: false,
+            },
+            color: {
+              value: "#4FD1C5", // Cor ciano do seu tema escuro
+            },
+            line_linked: {
+              enable: true,
+              distance: 150,
+              opacity: 0.4,
+              width: 1,
+              color: {
+                value: "#4FD1C5", // Cor ciano do seu tema escuro
+              },
+            },
+          },
+          detectRetina: true,
+        };
+
+        // Carrega as partículas no container com o ID "particles-background"
+        tsParticles.load("particles-background", particleConfig);
+      });
+    </script>
   </body>
 </html>
