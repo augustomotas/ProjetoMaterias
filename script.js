@@ -580,3 +580,44 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// Adicione este bloco de código ao seu arquivo script.js
+
+// Espera o DOM estar completamente carregado para executar o código
+document.addEventListener('DOMContentLoaded', () => {
+
+    // --- (Você provavelmente já tem outro código aqui dentro) ---
+
+    // Encontra o novo botão pelo ID que definimos no HTML
+    const limparBotao = document.getElementById('limparSelecaoBtn');
+
+    // Adiciona um "escutador" que espera pelo evento de clique no botão
+    limparBotao.addEventListener('click', () => {
+        
+        // Pede confirmação ao usuário antes de prosseguir. É uma boa prática!
+        const confirmacao = confirm("Tem certeza de que deseja limpar todas as matérias selecionadas?");
+
+        // Se o usuário clicou em "OK" (true), o código continua
+        if (confirmacao) {
+            // Encontra TODOS os checkboxes das matérias
+            const todosCheckboxes = document.querySelectorAll('.materia-item input[type="checkbox"]');
+
+            // Passa por cada checkbox encontrado
+            todosCheckboxes.forEach(checkbox => {
+                // Se o checkbox estiver marcado...
+                if (checkbox.checked) {
+                    // ...desmarca ele
+                    checkbox.checked = false;
+                    
+                    // IMPORTANTE: Dispara o evento 'change' no checkbox
+                    // Isso simula um clique do usuário, garantindo que sua lógica de 
+                    // atualização da barra de progresso e contadores seja acionada.
+                    checkbox.dispatchEvent(new Event('change'));
+                }
+            });
+
+            alert("Todas as seleções foram limpas.");
+        }
+    });
+
+}); // Fim do 'DOMContentLoaded'

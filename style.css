@@ -509,3 +509,11 @@ body a.matriz-btn:hover {
     left: 20px;
 }
 
+/* Estilo para o novo botão de Limpar Seleção */
+#limparSelecaoBtn {
+    background-color: #dc354678;
+}
+
+#limparSelecaoBtn:hover {   
+    background-color: #c82333;
+}
