@@ -1,6 +1,3 @@
-/* ======================================================= */
-/* === RESET FUNDAMENTAL DO BOX MODEL === */
-/* ======================================================= */
 *,
 *::before,
 *::after {
@@ -53,9 +50,11 @@ header {
     align-items: center;
     max-width: 960px;
     margin-bottom: 20px;
-    padding-top: 7%;
+    padding-top: 0;
 }
-
+#index {
+    margin-top: 14%;
+}
 body h1,
 body h2,
 body p {
@@ -72,11 +71,12 @@ body p {
 .voltar-btn {
     background-color: #6c757d;
     padding: 8px 12px;
+    margin-top: 40px;
     border: none;
     border-radius: 5px;
     color: white;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 13px;
     transition: background-color 0.2s ease;
 }
 
@@ -219,6 +219,7 @@ main {
 }
 
 .materia-item {
+    font-size: 16px;
     display: flex;
     align-items: center;
     padding: 10px;
@@ -452,6 +453,7 @@ h1 {
     header h1 {
         font-size: 1.8em;
         text-align: center;
+        padding-top: 45px;
     }
     h2{
         font-size: 1.3em;
@@ -460,11 +462,15 @@ h1 {
         font-size: 0.9em;
     }
     #index{
-        font-size: 2.2em;
+        font-size: 2em;
         text-align: center;
     }
+        body.index-page a.matriz-btn{
+        font-size: 0.9em;
+        min-width: 200px;
+        }
     .index-page {
-        padding-top: 27%;
+        padding-top: 010%;
     }
 
     .materias-container {
@@ -502,6 +508,10 @@ h1 {
     .quebra-requisito-container #quebraMateriaSelect,
     .quebra-requisito-container #confirmarQuebraBtn {
         width: 100%;
+    }
+
+    .voltar-btn {
+        margin-top: 0;
     }
 }
 
