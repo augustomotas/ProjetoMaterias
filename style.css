@@ -1,16 +1,44 @@
 /* Estilos Gerais */
+/* Estilos Gerais */
 body {
     font-family: Arial, sans-serif;
     background-color: #1A202C;
-    color: #333;
+    color: #f0f0f5;
+    /* Mudei para uma cor clara padrão */
     min-height: 100vh;
     box-sizing: border-box;
     overflow-x: hidden;
     position: relative;
-    display: grid;
-    justify-content: center
+    display: flex;
+    /* <-- MUDANÇA */
+    flex-direction: column;
+    /* <-- MUDANÇA */
+    align-items: center;
+    /* <-- MUDANÇA */
 }
 
+/* Media Query para dispositivos menores */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.2em;
+    }
+
+    /* ESTA É A REGRA MAIS IMPORTANTE PARA O SEU PROBLEMA */
+    .materias-container {
+        flex-direction: column;
+        /* Faz os períodos ficarem em coluna */
+        gap: 15px;
+    }
+
+    .periodo-box {
+        flex: 1 1 100%;
+        min-width: 100%;
+    }
+
+    .controles {
+        flex-direction: column;
+    }
+}
 /* MODIFICADO: Agora este container centraliza tudo */
 .page-container {
     padding: 20px;
@@ -302,6 +330,7 @@ header h1 {
 }
 
 .lista-materias {
+    color: rgb(32, 32, 32);
     display: flex;
     flex-direction: column;
 }
