@@ -6,7 +6,8 @@
     <title>Progresso Acadêmico - Matriz 2008</title>
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
+
+  <body class="matriz-page">
     <div id="particles-background" class="particles-container"></div>
 
     <div id="pageContainer" class="page-container">
@@ -15,8 +16,10 @@
           Voltar
         </button>
       </div>
+
       <header>
         <h1>Matriz Curricular de 2008</h1>
+        <div id="userInfo"></div>
       </header>
 
       <main>
@@ -72,12 +75,9 @@
       <p>Augusto Mota &copy; 2025</p>
     </footer>
 
-    <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.9.3/tsparticles.bundle.min.js"></script>
-
     <script>
       window.addEventListener("load", () => {
-        // Agora o 'particles-background' existe e o script vai funcionar
         tsParticles.load("particles-background", {
           fpsLimit: 60,
           particles: {
@@ -90,24 +90,25 @@
               speed: 1,
               direction: "none",
               out_mode: "out",
-              bounce: false,
             },
-            color: {
-              value: "#4FD1C5",
-            },
+            color: { value: "#4FD1C5" },
             line_linked: {
               enable: true,
               distance: 150,
               opacity: 0.4,
               width: 1,
-              color: {
-                value: "#4FD1C5",
-              },
+              color: { value: "#4FD1C5" },
             },
           },
           detectRetina: true,
         });
       });
     </script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+    <script src="script.js"></script>
   </body>
 </html>

@@ -6,15 +6,20 @@
     <title>Meu Progresso Acadêmico - Matriz 2023</title>
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
+
+  <body class="matriz-page">
+    <div id="particles-background" class="particles-container"></div>
+
     <div id="pageContainer" class="page-container">
       <div class="bttvoltar">
         <button onclick="window.location.href='index.html'" class="voltar-btn">
           Voltar
         </button>
       </div>
+
       <header>
         <h1>Matriz Curricular de 2023</h1>
+        <div id="userInfo"></div>
       </header>
 
       <main>
@@ -33,9 +38,11 @@
 
         <div class="controles">
           <button id="ocultarFeitasBtn">Ocultar Feitas</button>
+          <button id="limparSelecaoBtn">Limpar Seleção</button>
         </div>
 
         <section class="materias-container"></section>
+
         <div class="endbuttons">
           <div class="quebra-requisito-container">
             <p style="color: black">Quebrar pré-requisito:</p>
@@ -44,12 +51,12 @@
             </select>
             <button id="confirmarQuebraBtn">Confirmar</button>
           </div>
-        </div>
-        <div class="controles">
-          <div class="hamburger-icon" id="hamburgerIcon">
-            <span></span>
-            <span></span>
-            <span></span>
+          <div class="controles">
+            <div class="hamburger-icon" id="hamburgerIcon">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
           </div>
         </div>
       </main>
@@ -67,14 +74,11 @@
     <footer>
       <p>Augusto Mota &copy; 2025</p>
     </footer>
-    <script src="script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.9.3/tsparticles.bundle.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.9.3/tsparticles.bundle.min.js"></script>
     <script>
-      // Aguarda o conteúdo da página ser carregado
       window.addEventListener("load", () => {
-        // Configuração das partículas (baseada na sua versão dark-mode)
-        const particleConfig = {
+        tsParticles.load("particles-background", {
           fpsLimit: 60,
           particles: {
             number: { value: 60, density: { enable: true, value_area: 800 } },
@@ -86,27 +90,25 @@
               speed: 1,
               direction: "none",
               out_mode: "out",
-              bounce: false,
             },
-            color: {
-              value: "#4FD1C5", // Cor ciano do seu tema escuro
-            },
+            color: { value: "#4FD1C5" },
             line_linked: {
               enable: true,
               distance: 150,
               opacity: 0.4,
               width: 1,
-              color: {
-                value: "#4FD1C5", // Cor ciano do seu tema escuro
-              },
+              color: { value: "#4FD1C5" },
             },
           },
           detectRetina: true,
-        };
-
-        // Carrega as partículas no container com o ID "particles-background"
-        tsParticles.load("particles-background", particleConfig);
+        });
       });
     </script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+    <script src="script.js"></script>
   </body>
 </html>

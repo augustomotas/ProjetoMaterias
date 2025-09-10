@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Progresso Acadêmico</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="index-page">
+    <div id="particles-background" class="particles-container"></div>
+
+    <div class="page-container">
+      <h1>Login / Registro</h1>
+      <p style="margin-bottom: 30px; max-width: 400px; text-align: center">
+        Acesse sua conta ou crie uma nova para salvar e sincronizar seu
+        progresso entre dispositivos.
+      </p>
+
+      <div class="login-form">
+        <input type="email" id="emailInput" placeholder="Seu e-mail" required />
+        <input
+          type="password"
+          id="senhaInput"
+          placeholder="Sua senha"
+          required
+        />
+        <button id="loginBtn">Entrar</button>
+        <button id="registrarBtn">Registrar Nova Conta</button>
+      </div>
+    </div>
+
+    <footer>
+      <p>Augusto Mota &copy; 2025</p>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,5 +1,33 @@
-// --- Seção 1: Base de Dados ---
+
+
+// =======================================================
+// === 1. INICIALIZAÇÃO DO FIREBASE ===
+// =======================================================
+
+// Sua configuração pessoal do Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyBe1tHxW_sEtBOnu9dQLIElGarFi52LxeU",
+    authDomain: "progresso-academico.firebaseapp.com",
+    projectId: "progresso-academico",
+    storageBucket: "progresso-academico.appspot.com",
+    messagingSenderId: "748810350539",
+    appId: "1:748810350539:web:36f7c3680f4b0242cad04e"
+};
+
+// Inicializa o Firebase e cria referências para os serviços
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+
+// =======================================================
+// === 2. DADOS DAS MATRIZES ===
+// =======================================================
+// =======================================================
+// === 2. DADOS DAS MATRIZES ===
+// =======================================================
 const matriz2008 = [
+
     // Primeiro Período
     { codigo: 'MAT101', nome: 'Cálculo I', preRequisitos: [], periodo: 1 },
     { codigo: 'GEO101', nome: 'Geometria Analítica e Álgebra Vetorial', preRequisitos: [], periodo: 1 },
@@ -117,6 +145,7 @@ const matriz2008 = [
 ];
 
 const matriz2023 = [
+
     // Primeiro Período
     { codigo: 'IEC', nome: 'Introdução à Engenharia de Computação', preRequisitos: [], periodo: 1 },
     { codigo: 'FPI', nome: 'Fundamentos de Programação I', preRequisitos: [], periodo: 1 },
@@ -222,67 +251,214 @@ const matriz2023 = [
     { codigo: 'OTIM_COMB', nome: 'Otimização Combinatória', preRequisitos: ['OTIM_I'], periodo: 'Optativas' }
 ];
 
-// --- Seção 2: Estado da Aplicação ---
+// =======================================================
+// === 3. ESTADO GLOBAL DA APLICAÇÃO ===
+// =======================================================
 let progresso = {};
 let dadosDaMatriz = [];
 let obrigatorias = [];
 let materiasVisiveis = true;
+let currentUser = null;
 
-// --- Seção 3: Gerenciamento de Estado (Salvar/Carregar) ---
+
+// =======================================================
+// === 4. LÓGICA PRINCIPAL (RODA APÓS A PÁGINA CARREGAR) ===
+// =======================================================
+// =======================================================
+// === 4. LÓGICA PRINCIPAL (RODA APÓS A PÁGINA CARREGAR) ===
+// =======================================================
+document.addEventListener('DOMContentLoaded', () => {
+
+    // --- ROTEAMENTO: Decide qual código rodar baseado na página atual ---
+
+    // LÓGICA DA PÁGINA INDEX (NOVA VERIFICAÇÃO)
+    if (document.getElementById('index')) {
+        configurarPaginaIndex();
+    }
+
+    // LÓGICA DA PÁGINA DE LOGIN
+    if (document.getElementById('loginBtn')) {
+        configurarPaginaLogin();
+    }
+
+    // LÓGICA DA PÁGINA DA MATRIZ
+    if (document.getElementById('progressBar')) {
+        configurarPaginaMatriz();
+    }
+});
+
+
+// =======================================================
+// === 5. FUNÇÕES DE CONFIGURAÇÃO DE PÁGINAS ===
+// =======================================================
 
 /**
- * Salva o progresso atual no localStorage do navegador.
- * O progresso é salvo com uma chave específica para a matriz (2008 ou 2023).
+ * Configura todos os eventos e a lógica da página de login.
  */
-function salvarProgresso() {
-    const matrizAno = window.location.pathname.includes('matriz_2008') ? '2008' : '2023';
-    localStorage.setItem(`progressoFaculdade_${matrizAno}`, JSON.stringify(progresso));
+function configurarPaginaLogin() {
+    console.log("Estou na página de Login.");
+    const emailInput = document.getElementById('emailInput');
+    const senhaInput = document.getElementById('senhaInput');
+    const registrarBtn = document.getElementById('registrarBtn');
+    const loginBtn = document.getElementById('loginBtn');
+
+    registrarBtn.addEventListener('click', () => {
+        const email = emailInput.value;
+        const senha = senhaInput.value;
+        auth.createUserWithEmailAndPassword(email, senha)
+            .then(credenciais => {
+                console.log('Usuário registrado!', credenciais.user);
+                window.location.href = 'index.html'; // Redireciona para a escolha de matriz
+            })
+            .catch(erro => alert('Erro ao registrar: ' + erro.message));
+    });
+
+    loginBtn.addEventListener('click', () => {
+        const email = emailInput.value;
+        const senha = senhaInput.value;
+        auth.signInWithEmailAndPassword(email, senha)
+            .then(credenciais => {
+                console.log('Usuário logado!', credenciais.user);
+                window.location.href = 'index.html'; // Redireciona para a escolha de matriz
+            })
+            .catch(erro => alert('Erro ao logar: ' + erro.message));
+    });
 }
 
 /**
- * Carrega o progresso salvo do localStorage.
- * Se nenhum progresso for encontrado, inicializa como um objeto vazio.
+ * Configura a proteção da página e todos os eventos da página da matriz.
  */
-function carregarProgresso() {
-    const matrizAno = window.location.pathname.includes('matriz_2008') ? '2008' : '2023';
-    const dadosSalvos = localStorage.getItem(`progressoFaculdade_${matrizAno}`);
-    if (dadosSalvos) {
-        progresso = JSON.parse(dadosSalvos);
+function configurarPaginaMatriz() {
+// Dentro da sua função configurarPaginaMatriz()
+// SUBSTITUA seu bloco onAuthStateChanged por este:
+
+console.log("TESTE 1: Função configurarPaginaMatriz foi chamada. Anexando o listener de autenticação...");
+
+auth.onAuthStateChanged(user => {
+    // Este é o log mais importante. Se ele não aparecer, o Firebase não está funcionando.
+    console.log("TESTE 2: onAuthStateChanged foi ACIONADO."); 
+
+    if (user) {
+        console.log("TESTE 3: SUCESSO. Usuário detectado dentro do 'if'. Email:", user.email);
+        
+        // As linhas abaixo só rodam se o teste 3 aparecer.
+        document.body.classList.add('auth-ready');
+        currentUser = user;
+        mostrarInfoUsuario(user);
+        carregarProgresso(user.uid);
     } else {
-        progresso = {};
+        console.log("TESTE 4: FALHA. Nenhum usuário detectado. Redirecionando...");
+        window.location.href = 'login.html';
+    }
+});
+    const confirmarQuebraBtn = document.getElementById('confirmarQuebraBtn');
+    const baixarBtn = document.getElementById('baixarProgressoBtn');
+    const uploadInput = document.getElementById('uploadProgressoInput');
+    const ocultarFeitasBtn = document.getElementById('ocultarFeitasBtn');
+    const limparBotao = document.getElementById('limparSelecaoBtn');
+    const hamburgerIcon = document.getElementById('hamburgerIcon');
+    const hamburgerMenu = document.getElementById('hamburgerMenu');
+    const closeMenuBtn = document.getElementById('closeMenuBtn');
+    const pageContainer = document.getElementById('pageContainer');
+
+    if (confirmarQuebraBtn) confirmarQuebraBtn.addEventListener('click', quebrarPreRequisito);
+    if (baixarBtn) baixarBtn.addEventListener('click', baixarProgresso);
+    if (uploadInput) uploadInput.addEventListener('change', carregarProgressoDoArquivo);
+    if (ocultarFeitasBtn) ocultarFeitasBtn.addEventListener('click', toggleMateriasVisibilidade);
+    if (limparBotao) limparBotao.addEventListener('click', limparSelecao);
+    
+    if (hamburgerIcon && hamburgerMenu && closeMenuBtn && pageContainer) {
+        hamburgerIcon.addEventListener('click', () => {
+            hamburgerMenu.classList.add('active');
+            pageContainer.classList.add('menu-open');
+        });
+        closeMenuBtn.addEventListener('click', () => {
+            hamburgerMenu.classList.remove('active');
+            pageContainer.classList.remove('menu-open');
+        });
+        document.addEventListener('click', (event) => {
+            if (!hamburgerMenu.contains(event.target) && !hamburgerIcon.contains(event.target) && hamburgerMenu.classList.contains('active')) {
+                hamburgerMenu.classList.remove('active');
+                pageContainer.classList.remove('menu-open');
+            }
+        });
+    }
+}
+/**
+ * Configura a verificação de login para a página index.
+ */
+/**
+ * Configura a verificação de login para a página index.
+ */
+function configurarPaginaIndex() {
+    console.log("Estou na página Index.");
+    auth.onAuthStateChanged(user => {
+        if (user) {
+            // Se o usuário está logado, mostra as informações dele e o botão de Sair
+            currentUser = user;
+            mostrarInfoUsuario(user);
+        } else {
+            // Se não está logado, mostra o botão para Fazer Login
+            currentUser = null;
+            mostrarBotaoLogin();
+        }
+    });
+}
+// =======================================================
+// === 6. FUNÇÕES DE DADOS E LÓGICA (Firestore) ===
+// =======================================================
+
+function salvarProgresso() {
+    if (currentUser) {
+        const materiasMarcadas = Object.keys(progresso).filter(key => progresso[key]);
+        db.collection('progressos').doc(currentUser.uid).set({
+            materias: materiasMarcadas
+        })
+        .then(() => console.log('Progresso salvo na nuvem!'))
+        .catch(erro => console.error('Erro ao salvar:', erro));
     }
 }
 
+function carregarProgresso(userId) {
+    db.collection('progressos').doc(userId).get().then(doc => {
+        let progressoSalvo = [];
+        if (doc.exists) {
+            progressoSalvo = doc.data().materias || [];
+            console.log('Progresso carregado da nuvem:', progressoSalvo);
+        } else {
+            console.log('Nenhum progresso encontrado para este usuário.');
+        }
+        aplicarProgressoNaTela(progressoSalvo);
+    }).catch(erro => {
+        console.error('Erro ao carregar progresso:', erro);
+        renderizarMaterias();
+    });
+}
 
-// --- Seção 4: Lógica de UI e Renderização ---
+function aplicarProgressoNaTela(listaMateriasSalvas) {
+    progresso = {};
+    listaMateriasSalvas.forEach(codigo => {
+        progresso[codigo] = true;
+    });
+    renderizarMaterias();
+}
 
-/**
- * Renderiza todas as matérias na tela, organizadas por período.
- * Atualiza o estado visual (concluída, bloqueada, disponível) de cada matéria.
- */
+// =======================================================
+// === 7. FUNÇÕES DE UI E MANIPULAÇÃO DO DOM ===
+// =======================================================
+
 function renderizarMaterias() {
     const container = document.querySelector('.materias-container');
-    if (!container) return; // Sai da função se o container não existir
+    if (!container) return;
     container.innerHTML = '';
 
     dadosDaMatriz = window.location.pathname.includes('matriz_2008') ? matriz2008 : matriz2023;
-
-    if (dadosDaMatriz.length === 0) {
-        const aviso = document.createElement('p');
-        aviso.classList.add('aviso');
-        aviso.textContent = 'A matriz curricular não foi encontrada. Verifique o código.';
-        container.appendChild(aviso);
-        return;
-    }
-
     obrigatorias = dadosDaMatriz.filter(m => m.periodo !== 'Optativas');
 
     const periodos = {};
     dadosDaMatriz.forEach(materia => {
         const periodo = materia.periodo;
-        if (!periodos[periodo]) {
-            periodos[periodo] = [];
-        }
+        if (!periodos[periodo]) periodos[periodo] = [];
         periodos[periodo].push(materia);
     });
 
@@ -295,28 +471,20 @@ function renderizarMaterias() {
     periodosOrdenados.forEach(periodo => {
         const periodoBox = document.createElement('div');
         periodoBox.classList.add('periodo-box');
-
         const tituloPeriodo = document.createElement('h2');
-        tituloPeriodo.textContent = `Período ${periodo}`;
-        if (periodo === 'Optativas') {
-            tituloPeriodo.textContent = 'Disciplinas Optativas';
-        }
-
+        tituloPeriodo.textContent = periodo === 'Optativas' ? 'Disciplinas Optativas' : `Período ${periodo}`;
         const listaMaterias = document.createElement('div');
         listaMaterias.classList.add('lista-materias');
         
         let materiasNoPeriodoVisiveis = false;
-
         periodos[periodo].forEach(materia => {
             if (!materiasVisiveis && progresso[materia.codigo]) {
                 return;
             }
-
             materiasNoPeriodoVisiveis = true;
             
             const item = document.createElement('div');
             item.classList.add('materia-item');
-
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
             checkbox.id = materia.codigo;
@@ -337,10 +505,7 @@ function renderizarMaterias() {
             listaMaterias.appendChild(item);
 
             const preRequisitosAtendidos = materia.preRequisitos.every(pr => progresso[pr]);
-            const progressoPeriodosAnteriores = calcularProgressoAcumulado(periodo);
-            
-            // Regra: Pode fazer se os pré-requisitos foram atendidos E (o progresso anterior é >= 60% OU é uma optativa)
-            const podeFazer = preRequisitosAtendidos && (progressoPeriodosAnteriores >= 0.6 || periodo === 'Optativas' || periodo <= 2);
+            const podeFazer = preRequisitosAtendidos; // Lógica simplificada, ajuste se necessário
 
             if (!podeFazer && !progresso[materia.codigo]) {
                 checkbox.disabled = true;
@@ -361,20 +526,11 @@ function renderizarMaterias() {
     atualizarBarraDeProgresso();
 }
 
-/**
- * Calcula a porcentagem de matérias concluídas nos períodos anteriores ao atual.
- * @param {number | string} periodoAtual - O período a ser verificado.
- * @returns {number} - A proporção de matérias concluídas (0.0 a 1.0).
- */
 function calcularProgressoAcumulado(periodoAtual) {
-    if (periodoAtual <= 1) {
-        return 1.0;
-    }
+    if (periodoAtual <= 1) return 1.0;
     const materiasAnteriores = dadosDaMatriz.filter(m => m.periodo < periodoAtual && m.periodo !== 'Optativas');
     const totalMateriasAnteriores = materiasAnteriores.length;
-    if (totalMateriasAnteriores === 0) {
-        return 1.0; // Evita divisão por zero
-    }
+    if (totalMateriasAnteriores === 0) return 1.0;
     
     let concluidasMateriasAnteriores = 0;
     materiasAnteriores.forEach(materia => {
@@ -382,13 +538,9 @@ function calcularProgressoAcumulado(periodoAtual) {
             concluidasMateriasAnteriores++;
         }
     });
-    
     return concluidasMateriasAnteriores / totalMateriasAnteriores;
 }
 
-/**
- * Atualiza a barra de progresso com base nas matérias obrigatórias concluídas.
- */
 function atualizarBarraDeProgresso() {
     const barra = document.getElementById('progressBar');
     const texto = document.getElementById('progressText');
@@ -400,13 +552,7 @@ function atualizarBarraDeProgresso() {
     const obrigatoriasConcluidas = obrigatorias.filter(m => progresso[m.codigo]).length;
     const totalObrigatorias = obrigatorias.length;
     
-    if (totalObrigatorias === 0) {
-        barra.style.width = '0%';
-        texto.textContent = '0% concluído';
-        concluidasTexto.textContent = '0';
-        restantesTexto.textContent = '0';
-        return;
-    }
+    if (totalObrigatorias === 0) return;
     
     const obrigatoriasRestantes = totalObrigatorias - obrigatoriasConcluidas;
     const porcentagem = Math.round((obrigatoriasConcluidas / totalObrigatorias) * 100);
@@ -417,17 +563,12 @@ function atualizarBarraDeProgresso() {
     restantesTexto.textContent = obrigatoriasRestantes;
 }
 
-/**
- * Preenche o select de "quebra de pré-requisito" com as matérias disponíveis.
- */
 function preencherQuebraRequisitoSelect() {
     const quebraMateriaSelect = document.getElementById('quebraMateriaSelect');
     if (!quebraMateriaSelect) return;
-
     quebraMateriaSelect.innerHTML = '<option value="">Selecione uma matéria</option>';
-
     dadosDaMatriz.forEach(materia => {
-        if (!progresso[materia.codigo] && materia.preRequisitos.length > 0) {
+        if (!progresso[materia.codigo] && !materia.preRequisitos.every(pr => progresso[pr])) {
             const option = document.createElement('option');
             option.value = materia.codigo;
             option.textContent = materia.nome;
@@ -436,85 +577,20 @@ function preencherQuebraRequisitoSelect() {
     });
 }
 
-/**
- * Marca uma matéria como concluída, ignorando seus pré-requisitos.
- */
 function quebrarPreRequisito() {
     const quebraMateriaSelect = document.getElementById('quebraMateriaSelect');
     const codigoMateria = quebraMateriaSelect.value;
-
     if (!codigoMateria) {
         alert("Selecione uma matéria para quebrar o pré-requisito.");
         return;
     }
-
-    const materiaEncontrada = dadosDaMatriz.find(m => m.codigo === codigoMateria);
-    if (materiaEncontrada) {
-        progresso[materiaEncontrada.codigo] = true;
-        salvarProgresso();
-        renderizarMaterias();
-        alert(`Pré-requisito quebrado para a matéria: ${materiaEncontrada.nome}.`);
-        quebraMateriaSelect.value = '';
-    }
+    progresso[codigoMateria] = true;
+    salvarProgresso();
+    renderizarMaterias();
+    alert(`Pré-requisito quebrado para a matéria selecionada.`);
+    quebraMateriaSelect.value = '';
 }
 
-/**
- * Inicia o download de um arquivo JSON com o progresso atual.
- */
-function baixarProgresso() {
-    const matrizAno = window.location.pathname.includes('matriz_2008') ? '2008' : '2023';
-    const dadosSalvos = localStorage.getItem(`progressoFaculdade_${matrizAno}`);
-
-    if (!dadosSalvos || dadosSalvos === '{}') {
-        alert('Não há progresso para baixar.');
-        return;
-    }
-
-    const blob = new Blob([dadosSalvos], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `progresso_faculdade_${matrizAno}.json`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-}
-
-/**
- * Carrega o progresso a partir de um arquivo JSON selecionado pelo usuário.
- * @param {Event} event - O evento de mudança do input de arquivo.
- */
-function carregarProgressoDoArquivo(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-        try {
-            const fileContent = e.target.result;
-            const dadosCarregados = JSON.parse(fileContent);
-
-            if (typeof dadosCarregados !== 'object' || dadosCarregados === null) {
-                throw new Error('Formato de arquivo inválido.');
-            }
-
-            progresso = dadosCarregados;
-            salvarProgresso();
-            renderizarMaterias();
-            alert('Progresso carregado com sucesso!');
-            event.target.value = ''; // Reseta o input para poder carregar o mesmo arquivo novamente
-        } catch (error) {
-            alert('Erro ao carregar o arquivo. Por favor, verifique se é um arquivo de progresso válido.');
-            console.error(error);
-        }
-    };
-    reader.readAsText(file);
-}
-
-/**
- * Alterna a visibilidade das matérias já concluídas.
- */
 function toggleMateriasVisibilidade() {
     materiasVisiveis = !materiasVisiveis;
     renderizarMaterias();
@@ -524,100 +600,201 @@ function toggleMateriasVisibilidade() {
     }
 }
 
+function limparSelecao() {
+    if (confirm("Tem certeza de que deseja limpar todas as matérias selecionadas?")) {
+        const todosCheckboxes = document.querySelectorAll('.materia-item input[type="checkbox"]:checked');
+        todosCheckboxes.forEach(checkbox => {
+            checkbox.checked = false;
+            checkbox.dispatchEvent(new Event('change'));
+        });
+        alert("Todas as seleções foram limpas.");
+    }
+}
 
-// --- Seção 5: Chamada Inicial e Event Listeners ---
-document.addEventListener('DOMContentLoaded', () => {
-    // Carrega o progresso salvo assim que a página é carregada
-    carregarProgresso();
-    // Renderiza as matérias na tela
-    renderizarMaterias();
+function mostrarInfoUsuario(user) {
+    const userInfoDiv = document.getElementById('userInfo');
+    if (!userInfoDiv) return;
+
+    userInfoDiv.innerHTML = '';
+    const emailText = document.createElement('p');
+    emailText.textContent = `Logado como: ${user.email}`;
+    const sairBtn = document.createElement('button');
+    sairBtn.textContent = 'Sair';
+    sairBtn.className = 'logout-btn';
     
-    // Seleciona os elementos da página
+    sairBtn.addEventListener('click', () => {
+        auth.signOut().catch(error => console.error('Erro ao sair:', error));
+    });
+
+    userInfoDiv.appendChild(emailText);
+    userInfoDiv.appendChild(sairBtn);
+}
+
+function baixarProgresso() {
+    if (!currentUser) {
+        alert("Você precisa estar logado para baixar seu progresso.");
+        return;
+    }
+    const materiasMarcadas = Object.keys(progresso).filter(key => progresso[key]);
+    if (materiasMarcadas.length === 0) {
+        alert('Não há progresso para baixar.');
+        return;
+    }
+
+    const dadosParaSalvar = JSON.stringify(materiasMarcadas);
+    const blob = new Blob([dadosParaSalvar], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `meu_progresso_${currentUser.uid.substring(0,5)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
+function carregarProgressoDoArquivo(event) {
+    const file = event.target.files[0];
+    if (!file || !currentUser) return;
+    
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        try {
+            const dadosCarregados = JSON.parse(e.target.result);
+            if (!Array.isArray(dadosCarregados)) throw new Error("Formato inválido.");
+            
+            aplicarProgressoNaTela(dadosCarregados);
+            salvarProgresso();
+            alert('Progresso carregado com sucesso!');
+        } catch (error) {
+            alert('Erro ao carregar o arquivo.');
+        }
+    };
+    reader.readAsText(file);
+}
+
+/**
+ * Mostra o e-mail do usuário e o botão de Sair na tela.
+ */
+function mostrarInfoUsuario(user) {
+    const userInfoDiv = document.getElementById('userInfo');
+    // Se a div não existir na página atual, não faz nada.
+    if (!userInfoDiv) return;
+
+    // Limpa qualquer conteúdo anterior
+    userInfoDiv.innerHTML = '';
+
+    // Cria o elemento de parágrafo para o e-mail
+    const emailText = document.createElement('p');
+    emailText.textContent = user.email; // Mostra o e-mail do usuário logado
+    
+    // Cria o botão de sair
+    const sairBtn = document.createElement('button');
+    sairBtn.textContent = 'Sair';
+    sairBtn.className = 'logout-btn'; // Adiciona a classe que estilizamos no CSS
+    
+    // Adiciona o evento de clique para fazer o logout
+    sairBtn.addEventListener('click', () => {
+        auth.signOut()
+            .then(() => {
+                console.log('Usuário deslogado com sucesso.');
+                // Não precisa de redirecionamento aqui. O onAuthStateChanged vai cuidar disso.
+            })
+            .catch(error => {
+                console.error('Erro ao fazer logout:', error);
+            });
+    });
+
+    // Adiciona o texto e o botão na div
+    userInfoDiv.appendChild(emailText);
+    userInfoDiv.appendChild(sairBtn);
+}
+
+/**
+ * Configura a proteção da página e todos os eventos da página da matriz.
+ *//**
+ * Configura a proteção da página e todos os eventos da página da matriz.
+ */
+function configurarPaginaMatriz() {
+    console.log("Estou na página da Matriz.");
+    
+    // "Porteiro" que verifica se o usuário está logado
+    auth.onAuthStateChanged(user => {
+        if (user) {
+            // =======================================================
+            // CORREÇÃO CRÍTICA: A linha abaixo DEVE SER a primeira.
+            // Ela garante que a página apareça imediatamente.
+            document.body.classList.add('auth-ready');
+            // =======================================================
+
+            // Agora, o resto do código é executado.
+            currentUser = user;
+            console.log("Usuário autenticado:", user.email);
+            mostrarInfoUsuario(user);
+            carregarProgresso(user.uid);
+            
+        } else {
+            // Se NÃO HÁ usuário logado:
+            currentUser = null;
+            console.log("Usuário não autenticado. Redirecionando para login...");
+            window.location.href = 'login.html';
+        }
+    });
+
+    // Anexa os eventos aos botões da página da matriz (código inalterado)
     const confirmarQuebraBtn = document.getElementById('confirmarQuebraBtn');
     const baixarBtn = document.getElementById('baixarProgressoBtn');
     const uploadInput = document.getElementById('uploadProgressoInput');
     const ocultarFeitasBtn = document.getElementById('ocultarFeitasBtn');
+    const limparBotao = document.getElementById('limparSelecaoBtn');
     const hamburgerIcon = document.getElementById('hamburgerIcon');
     const hamburgerMenu = document.getElementById('hamburgerMenu');
     const closeMenuBtn = document.getElementById('closeMenuBtn');
     const pageContainer = document.getElementById('pageContainer');
 
-    // Adiciona os listeners para os botões e inputs
-    if (confirmarQuebraBtn) {
-        confirmarQuebraBtn.addEventListener('click', quebrarPreRequisito);
-    }
-    if (baixarBtn) {
-        baixarBtn.addEventListener('click', baixarProgresso);
-    }
-    if (uploadInput) {
-        uploadInput.addEventListener('change', carregarProgressoDoArquivo);
-    }
-    if (ocultarFeitasBtn) {
-        ocultarFeitasBtn.addEventListener('click', toggleMateriasVisibilidade);
-    }
+    if (confirmarQuebraBtn) confirmarQuebraBtn.addEventListener('click', quebrarPreRequisito);
+    if (baixarBtn) baixarBtn.addEventListener('click', baixarProgresso);
+    if (uploadInput) uploadInput.addEventListener('change', carregarProgressoDoArquivo);
+    if (ocultarFeitasBtn) ocultarFeitasBtn.addEventListener('click', toggleMateriasVisibilidade);
+    if (limparBotao) limparBotao.addEventListener('click', limparSelecao);
     
-    // Lógica para o menu hamburger
+    // Lógica do menu hambúrguer (inalterada)
     if (hamburgerIcon && hamburgerMenu && closeMenuBtn && pageContainer) {
-        hamburgerIcon.addEventListener('click', (event) => {
-            event.stopPropagation();
+        hamburgerIcon.addEventListener('click', () => {
             hamburgerMenu.classList.add('active');
             pageContainer.classList.add('menu-open');
         });
-
-        closeMenuBtn.addEventListener('click', (event) => {
-            event.stopPropagation();
+        closeMenuBtn.addEventListener('click', () => {
             hamburgerMenu.classList.remove('active');
             pageContainer.classList.remove('menu-open');
         });
-        
         document.addEventListener('click', (event) => {
-            const clicouFora = !hamburgerMenu.contains(event.target) && !hamburgerIcon.contains(event.target);
-            
-            if (clicouFora && hamburgerMenu.classList.contains('active')) {
+            if (!hamburgerMenu.contains(event.target) && !hamburgerIcon.contains(event.target) && hamburgerMenu.classList.contains('active')) {
                 hamburgerMenu.classList.remove('active');
                 pageContainer.classList.remove('menu-open');
             }
         });
     }
-});
+}
 
-// Adicione este bloco de código ao seu arquivo script.js
+/**
+ * Mostra um botão "Fazer Login" quando o usuário não está autenticado.
+ */
+function mostrarBotaoLogin() {
+    const userInfoDiv = document.getElementById('userInfo');
+    if (!userInfoDiv) return;
 
-// Espera o DOM estar completamente carregado para executar o código
-document.addEventListener('DOMContentLoaded', () => {
+    // Limpa qualquer conteúdo anterior
+    userInfoDiv.innerHTML = '';
 
-    // --- (Você provavelmente já tem outro código aqui dentro) ---
+    // Cria o botão de login
+    const loginBtn = document.createElement('button');
+    loginBtn.textContent = 'Fazer Login';
+    loginBtn.className = 'login-page-btn'; // Classe para estilização
 
-    // Encontra o novo botão pelo ID que definimos no HTML
-    const limparBotao = document.getElementById('limparSelecaoBtn');
-
-    // Adiciona um "escutador" que espera pelo evento de clique no botão
-    limparBotao.addEventListener('click', () => {
-        
-        // Pede confirmação ao usuário antes de prosseguir. É uma boa prática!
-        const confirmacao = confirm("Tem certeza de que deseja limpar todas as matérias selecionadas?");
-
-        // Se o usuário clicou em "OK" (true), o código continua
-        if (confirmacao) {
-            // Encontra TODOS os checkboxes das matérias
-            const todosCheckboxes = document.querySelectorAll('.materia-item input[type="checkbox"]');
-
-            // Passa por cada checkbox encontrado
-            todosCheckboxes.forEach(checkbox => {
-                // Se o checkbox estiver marcado...
-                if (checkbox.checked) {
-                    // ...desmarca ele
-                    checkbox.checked = false;
-                    
-                    // IMPORTANTE: Dispara o evento 'change' no checkbox
-                    // Isso simula um clique do usuário, garantindo que sua lógica de 
-                    // atualização da barra de progresso e contadores seja acionada.
-                    checkbox.dispatchEvent(new Event('change'));
-                }
-            });
-
-            alert("Todas as seleções foram limpas.");
-        }
+    // Adiciona o evento de clique para redirecionar para a página de login
+    loginBtn.addEventListener('click', () => {
+        window.location.href = 'login.html';
     });
 
-}); // Fim do 'DOMContentLoaded'
+    // Adiciona o botão na página
+    userInfoDiv.appendChild(loginBtn);
+}
