@@ -34,14 +34,22 @@ body {
     }
 }
 /* MODIFICADO: Agora este container centraliza tudo */
+/* CORREÇÃO DEFINITIVA DE CENTRALIZAÇÃO */
 .page-container {
-        width: 100%;
-            /* <-- ADICIONE ESTA LINHA */
+    width: 100%;
+    /* Define uma largura máxima para o conteúdo não ficar largo demais em desktops */
+    max-width: 960px;
+    /* Margens verticais (em cima/em baixo) de 0, 
+       margens horizontais (esquerda/direita) automáticas para forçar a centralização */
+    margin: 0 auto;
+
     padding: 20px;
-    transition: transform 0.3s ease-in-out;
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
+    z-index: 1;
+    /* A linha de transition foi removida daqui pois deve ficar na regra .page-container.menu-open */
 }
 
 .page-container.menu-open {
@@ -489,15 +497,47 @@ body a.matriz-btn:hover {
     z-index: 1;
 }
 
-.endbuttons {
-    justify-content: center;
-        display: flex;
-        align-items: anchor-center;
-    
-}
 
 .bttvoltar{
     position: absolute;
     top: 20px;
     left: 20px;
+}
+
+/* ======================================================= */
+/* === CORREÇÃO FINAL PARA ALINHAMENTO DOS BOTÕES INFERIORES === */
+/* ======================================================= */
+
+/* 1. Ajusta o container PAI para alinhar os itens corretamente */
+.endbuttons {
+    display: flex;
+    /* Alinha os itens verticalmente ao centro (o seu estava com valor inválido) */
+    align-items: center;
+    /* Cria um espaço entre os dois itens */
+    gap: 15px;
+
+    /* Faz este container se comportar como os outros blocos */
+    width: 100%;
+    max-width: 600px;
+    /* Usa o mesmo max-width dos outros containers */
+    justify-content: center;
+    /* Centraliza o conjunto */
+}
+
+/* 2. Faz a caixa "Quebrar pré-requisito" ocupar o espaço flexível */
+.quebra-requisito-container {
+    /* Permite que este item cresça e ocupe o espaço disponível */
+    flex-grow: 1;
+    /* Remove a largura fixa para que seja flexível */
+    width: auto;
+    max-width: none;
+    /* Remove a largura máxima para que ele possa preencher */
+}
+
+/* 3. Faz o container do menu hambúrguer ter o tamanho exato do ícone */
+.endbuttons .controles {
+    /* Remove a largura de 100% APENAS deste container de controles específico */
+    width: auto;
+    /* Remove a capacidade de crescer */
+    flex-grow: 0;
 }
