@@ -15,7 +15,9 @@ body {
 /* Media Query para dispositivos menores */
 @media (max-width: 768px) {
     header h1 {
-        font-size: 1.2em;
+        font-size: 1.8em;
+        text-align: center;
+            padding-top: 20%;
     }
 
     .materias-container {
@@ -83,7 +85,7 @@ header {
 }
 
 body.index-page header {
-    padding-top: 15%;
+    padding-top: 12%;
 }
 .voltar-btn {
     background-color: #6c757d;
@@ -372,27 +374,6 @@ input[type="checkbox"] {
     width: 100%;
 }
 
-/* Media Query para dispositivos menores */
-@media (max-width: 768px) {
-    header h1 {
-        font-size: 1.2em;
-    }
-
-    .materias-container {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .periodo-box {
-        flex: 1 1 100%;
-        min-width: 100%;
-    }
-
-    .controles {
-        flex-direction: column;
-    }
-}
-/* --- Estilos para a Página de Escolha (index.html) --- */
 
 /* Garante a centralização TOTAL (vertical e horizontal) da página */
 body.index-page .page-container {
@@ -410,8 +391,12 @@ body.index-page .page-container {
 }
 
 /* Estiliza o título principal */
+@media (min-width: 768px) {
+    body.index-page h1 {
+    font-size: 2.8em;        /* Tamanho menor em telas pequenas */
+    }
+}
 body.index-page h1 {
-    font-size: 2.8em;
     font-weight: bold;
     margin-bottom: 40px;
 }
