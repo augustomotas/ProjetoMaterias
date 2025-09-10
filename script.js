@@ -390,17 +390,42 @@ auth.onAuthStateChanged(user => {
 /**
  * Configura a verificação de login para a página index.
  */
+/**
+ * Configura a página index, incluindo os botões de login/logout e os links dinâmicos da matriz.
+ */
 function configurarPaginaIndex() {
     console.log("Estou na página Index.");
+
+    const botoesMatriz = document.querySelectorAll('.matriz-btn');
+
     auth.onAuthStateChanged(user => {
         if (user) {
-            // Se o usuário está logado, mostra as informações dele e o botão de Sair
+            // Se o usuário está LOGADO
             currentUser = user;
-            mostrarInfoUsuario(user);
+            mostrarInfoUsuario(user); // Mostra "Logado como..." e botão "Sair"
+
+            botoesMatriz.forEach(botao => {
+                botao.addEventListener('click', (event) => {
+                    event.preventDefault(); // Impede que o link '#' faça a página pular
+                    const anoMatriz = botao.dataset.matriz;
+                    // Manda para a página de ACOMPANHAMENTO
+                    window.location.href = `matriz_${anoMatriz}.html`;
+                });
+            });
+
         } else {
-            // Se não está logado, mostra o botão para Fazer Login
+            // Se o usuário NÃO está logado
             currentUser = null;
-            mostrarBotaoLogin();
+            mostrarBotaoLogin(); // Mostra o botão "Fazer Login"
+
+            botoesMatriz.forEach(botao => {
+                botao.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    const anoMatriz = botao.dataset.matriz;
+                    // Manda para a página de VISUALIZAÇÃO
+                    window.location.href = `visualizar_matriz.html?matriz=${anoMatriz}`;
+                });
+            });
         }
     });
 }

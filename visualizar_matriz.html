@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Visualizar Matriz Curricular</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="matriz-page">
+    <div id="particles-background" class="particles-container"></div>
+
+    <div id="pageContainer" class="page-container">
+      <div class="bttvoltar">
+        <button onclick="window.location.href='index.html'" class="voltar-btn">
+          Voltar
+        </button>
+      </div>
+
+      <header>
+        <h1 id="titulo-matriz">Carregando Matriz...</h1>
+      </header>
+
+      <main>
+        <section class="materias-container"></section>
+      </main>
+    </div>
+
+    <footer>
+      <p>Augusto Mota &copy; 2025</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.9.3/tsparticles.bundle.min.js"></script>
+
+    <script src="visualizar.js"></script>
+  </body>
+</html>

@@ -643,3 +643,14 @@ h1 {
     background-color: #38B2AC;
     /* Tom mais escuro da cor de destaque */
 }
+
+.visualizar-links {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.visualizar-links a {
+    color: #4FD1C5;
+    display: block;
+    margin-top: 10px;
+}
