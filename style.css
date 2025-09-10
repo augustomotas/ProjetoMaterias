@@ -450,12 +450,22 @@ h1 {
 /* ======================================================= */
 @media (max-width: 768px) {
     header h1 {
+        font-size: 1.8em;
+        text-align: center;
+    }
+    h2{
+        font-size: 1.3em;
+    }
+    .progress-text{
+        font-size: 0.9em;
+    }
+    #index{
         font-size: 2.2em;
         text-align: center;
     }
-.index-page {
-    padding-top: 27%;
-}
+    .index-page {
+        padding-top: 27%;
+    }
 
     .materias-container {
         flex-direction: column;
@@ -470,6 +480,28 @@ h1 {
     .controles {
         flex-direction: column;
         align-items: center;
+    }
+    /* Muda o layout do container de quebra de requisito para vertical */
+    .quebra-requisito-container {
+        flex-direction: column;
+        /* Empilha os itens na vertical */
+        align-items: stretch;
+        /* Faz os itens se esticarem para a largura total */
+    }
+
+    /* Garante que o texto do label fique legível e centralizado */
+    .quebra-requisito-container p {
+        color: #333;
+        /* Cor escura para o texto dentro do box claro */
+        text-align: center;
+        margin-bottom: 10px;
+        /* Adiciona um espaço abaixo do título */
+    }
+
+    /* Faz o seletor e o botão ocuparem 100% da largura no mobile */
+    .quebra-requisito-container #quebraMateriaSelect,
+    .quebra-requisito-container #confirmarQuebraBtn {
+        width: 100%;
     }
 }
 
