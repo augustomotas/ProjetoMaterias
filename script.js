@@ -471,7 +471,10 @@ function aplicarProgressoNaTela(listaMateriasSalvas) {
 // =======================================================
 // === 7. FUNÇÕES DE UI E MANIPULAÇÃO DO DOM ===
 // =======================================================
-
+/**
+ * Renderiza todas as matérias na tela, organizadas por período.
+ * ATUALIZADO: Agora cria uma tooltip com os pré-requisitos faltantes para matérias bloqueadas.
+ */
 function renderizarMaterias() {
     const container = document.querySelector('.materias-container');
     if (!container) return;
@@ -479,6 +482,10 @@ function renderizarMaterias() {
 
     dadosDaMatriz = window.location.pathname.includes('matriz_2008') ? matriz2008 : matriz2023;
     obrigatorias = dadosDaMatriz.filter(m => m.periodo !== 'Optativas');
+
+    // --- NOVA ADIÇÃO: Mapa para encontrar nomes de matérias por código facilmente ---
+    const mapaMaterias = new Map(dadosDaMatriz.map(m => [m.codigo, m.nome]));
+    // --- FIM DA NOVA ADIÇÃO ---
 
     const periodos = {};
     dadosDaMatriz.forEach(materia => {
@@ -527,17 +534,46 @@ function renderizarMaterias() {
 
             item.appendChild(checkbox);
             item.appendChild(label);
-            listaMaterias.appendChild(item);
-
+            
             const preRequisitosAtendidos = materia.preRequisitos.every(pr => progresso[pr]);
-            const podeFazer = preRequisitosAtendidos; // Lógica simplificada, ajuste se necessário
+            const podeFazer = preRequisitosAtendidos; // Simplificado
 
             if (!podeFazer && !progresso[materia.codigo]) {
                 checkbox.disabled = true;
                 item.classList.add('bloqueada');
+
+                // --- NOVA ADIÇÃO: Lógica para criar a tooltip ---
+                const preRequisitosFaltantes = materia.preRequisitos
+                    .filter(pr => !progresso[pr]) // Filtra apenas os pré-requisitos não concluídos
+                    .map(prCodigo => mapaMaterias.get(prCodigo)); // Pega o nome completo de cada um
+
+                if (preRequisitosFaltantes.length > 0) {
+                    const tooltip = document.createElement('div');
+                    tooltip.className = 'prereq-tooltip';
+                    
+                    // --- NOVA ADIÇÃO: Verifica se o período é o último da linha para ajustar a posição da tooltip ---
+                    // Isso é um ajuste manual, pode precisar de refinamento para layouts mais complexos
+                    if (periodo % 2 === 0 || periodo === 'Optativas') { // Se for período par ou optativas, assume que está na coluna direita
+                         tooltip.classList.add('prereq-tooltip-left');
+                    }
+                    // --- FIM DA NOVA ADIÇÃO ---
+                    
+                    let tooltipContent = '<span>Pré-requisitos pendentes:</span><ul>';
+                    preRequisitosFaltantes.forEach(nomeMateria => {
+                        tooltipContent += `<li>${nomeMateria}</li>`;
+                    });
+                    tooltipContent += '</ul>';
+                    tooltip.innerHTML = tooltipContent;
+                    
+                    item.appendChild(tooltip); // Adiciona a tooltip ao item da matéria
+                }
+                // --- FIM DA NOVA ADIÇÃO ---
+
             } else if (progresso[materia.codigo]) {
                 item.classList.add('concluida');
             }
+            
+            listaMaterias.appendChild(item);
         });
 
         if (materiasNoPeriodoVisiveis) {

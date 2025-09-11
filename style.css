@@ -24,7 +24,6 @@ body {
 /* === CONTAINER PRINCIPAL DA PÁGINA === */
 /* ======================================================= */
 .page-container {
-    overflow-x: hidden;
     width: 100%;
     max-width: 960px;
     margin: 0 auto;
@@ -471,10 +470,7 @@ h1 {
             /* CRIA APENAS 1 COLUNA */
             gap: 15px;
         }
-    
-        .periodo-box {
-            /* Nenhuma regra específica de largura é necessária aqui */
-        }
+
 
     .controles {
         flex-direction: column;
@@ -506,6 +502,53 @@ h1 {
     .voltar-btn {
         margin-top: 0;
     }
+        /* ======================================================= */
+        /* === AJUSTE DA TOOLTIP PARA O LAYOUT MOBILE === */
+        /* ======================================================= */
+    
+        /*
+      Sobrescreve o posicionamento da tooltip para que ela apareça
+      ACIMA do elemento em telas pequenas, evitando cortes laterais.
+    */
+        .prereq-tooltip,
+        .prereq-tooltip.prereq-tooltip-left {
+            /* Posiciona a tooltip acima do item da matéria */
+            top: auto;
+            bottom: calc(100% + 8px);
+            /* 100% da altura do item + 8px de espaço */
+            left: 50%;
+            right: auto;
+            transform: translateX(-50%);
+            /* Centraliza a tooltip horizontalmente */
+    
+            /* Garante que a tooltip não seja mais larga que a tela */
+            max-width: 90vw;
+        }
+    
+        /*
+      Adiciona uma pequena seta na base da tooltip para indicar
+      de onde ela está vindo.
+    */
+        .prereq-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            /* Posiciona a seta na base da tooltip */
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 6px;
+            border-style: solid;
+            border-color: #2d3748 transparent transparent transparent;
+            /* A cor corresponde ao fundo da tooltip */
+        }
+    
+        /* Ajusta o efeito de hover para a nova posição vertical */
+        .materia-item.bloqueada:hover .prereq-tooltip,
+        .materia-item.bloqueada:hover .prereq-tooltip.prereq-tooltip-left {
+            transform: translateX(-50%);
+            /* Mantém a centralização horizontal */
+        }
+
 }
 
 /* ======================================================= */
@@ -711,4 +754,96 @@ body.matriz-page.view-only header h1,
 body.matriz-page.view-only footer {
     visibility: visible;
     opacity: 1;
+}
+
+
+/* ======================================================= */
+/* === ESTILOS PARA A TOOLTIP DE PRÉ-REQUISITOS === */
+/* ======================================================= */
+/* ======================================================= */
+/* === ESTILOS PARA A TOOLTIP DE PRÉ-REQUISITOS === */
+/* ======================================================= */
+
+/* Prepara o item da matéria para posicionar a tooltip dentro dele */
+.materia-item.bloqueada {
+    position: relative;
+    cursor: help;
+    /* Muda o cursor para um ponto de interrogação */
+    /* Garante que o item da matéria não seja cortado por overflow */
+    overflow: visible;
+}
+
+/* Estilo principal da tooltip (escondida por padrão) */
+.prereq-tooltip {
+    position: absolute;
+    left: calc(60% + 15px);
+    /* Posiciona um pouco à direita do item (100% + gap) */
+    top: 50%;
+    transform: translateY(-50%);
+    /* Centraliza verticalmente */
+
+    background-color: #070a12;
+    /* Fundo escuro */
+    color: #ffffff;
+    /* Texto claro */
+    padding: 10px 15px;
+    border-radius: 6px;
+    box-shadow: 0 4px 14px rgba(119, 0, 255, 0.35);
+    width: max-content;
+    /* Largura se ajusta ao conteúdo */
+    max-width: 250px;
+    /* Largura máxima para não ficar muito grande */
+    z-index: 100;
+    /* Z-index alto para garantir que fique acima de tudo */
+
+    /* Efeito de transição */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out, visibility 0.2s ease-in-out;
+}
+
+/* Mostra a tooltip quando o mouse está sobre o item bloqueado */
+.materia-item.bloqueada:hover .prereq-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-50%);
+    /* Garante que a transição não bagunce o Y */
+}
+
+/* --- NOVA ADIÇÃO: Estilo para a tooltip aparecer à esquerda --- */
+.prereq-tooltip.prereq-tooltip-left {
+    left: auto;
+    /* Anula a posição "left" padrão */
+    right: calc(100% + 15px);
+    /* Posiciona à esquerda do item */
+    transform: translateY(-50%);
+    /* Centraliza verticalmente */
+}
+
+/* Garante que o hover funcione corretamente para a tooltip da esquerda */
+.materia-item.bloqueada:hover .prereq-tooltip.prereq-tooltip-left {
+    transform: translateY(-50%);
+}
+
+/* --- FIM DA NOVA ADIÇÃO --- */
+
+/* Estilos para o conteúdo da tooltip */
+.prereq-tooltip span {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+}
+
+.prereq-tooltip ul {
+    margin: 0;
+    padding-left: 18px;
+    /* Adiciona um recuo para a lista */
+    list-style-type: '– ';
+    /* Adiciona um traço como marcador */
+}
+
+.prereq-tooltip li {
+    font-size: 0.85em;
+    margin-bottom: 3px;
 }
