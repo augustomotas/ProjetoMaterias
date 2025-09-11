@@ -188,10 +188,11 @@ main {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    /* MUDANÇA */
+    grid-template-columns: repeat(2, 1fr);
+    /* CRIA 2 COLUNAS DE LARGURA IGUAL */
     gap: 20px;
-    justify-content: center;
 }
 
 .periodo-box {
@@ -199,8 +200,6 @@ main {
     padding: 20px;
     border-radius: 8px;
     box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
-    flex: 1 1 calc(33% - 20px);
-    min-width: 280px;
 }
 
 .periodo-box h2 {
@@ -218,13 +217,6 @@ main {
     flex-direction: column;
 }
 
-.materia-item {
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid #eee;
-}
 
 .materia-item:last-child {
     border-bottom: none;
@@ -473,15 +465,16 @@ h1 {
         padding-top: 010%;
     }
 
-    .materias-container {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .periodo-box {
-        flex-basis: 100%;
-        min-width: 100%;
-    }
+        /* ... outras regras ... */
+        .materias-container {
+            grid-template-columns: 1fr;
+            /* CRIA APENAS 1 COLUNA */
+            gap: 15px;
+        }
+    
+        .periodo-box {
+            /* Nenhuma regra específica de largura é necessária aqui */
+        }
 
     .controles {
         flex-direction: column;
@@ -653,4 +646,69 @@ h1 {
     color: #4FD1C5;
     display: block;
     margin-top: 10px;
+}/* ======================================================= */
+/* === AJUSTE FINAL PARA LAYOUT TABULAR DAS MATÉRIAS === */
+/* ======================================================= */
+
+/* Transforma cada linha de matéria em um container flexível */
+.materia-item {
+    display: flex;
+    align-items: flex-start;
+    /* MUDANÇA: Alinha os itens pelo topo */
+    gap: 15px;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+.periodo-box .materia-item:last-child {
+    border-bottom: none;
+}
+
+/* Garante que o container da lista não tenha padding extra que desalinhe */
+.lista-materias {
+    padding: 0;
+}
+
+/* Estilo para a sigla da matéria (COLUNA FIXA) */
+.materia-codigo {
+    flex-basis: 140px;
+    /* MUDANÇA: Define uma largura fixa de 140px para esta coluna */
+    flex-shrink: 0;
+    /* Impede que a coluna encolha */
+
+    /* Estilos visuais que você já tinha */
+    background-color: #e9ecef;
+    color: #495057;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    text-align: start;
+}
+
+/* Estilo para o nome da matéria (COLUNA FLEXÍVEL) */
+.materia-nome,
+.materia-item label {
+    flex-grow: 1;
+    /* Faz o nome/label ocupar todo o espaço restante */
+    line-height: 1.4;
+}
+
+.materia-nome{
+    padding-right: 15px;
+}
+
+/* ======================================================= */
+/* === CORREÇÃO DE VISIBILIDADE PARA PÁGINA VIEW-ONLY === */
+/* ======================================================= */
+
+/*
+  Esta regra sobrescreve a regra de segurança que esconde o conteúdo,
+  tornando a página de visualização sempre visível.
+*/
+body.matriz-page.view-only main,
+body.matriz-page.view-only header h1,
+body.matriz-page.view-only footer {
+    visibility: visible;
+    opacity: 1;
 }

@@ -1,81 +1,310 @@
-// Aguarda a página carregar completamente
 document.addEventListener('DOMContentLoaded', () => {
+    console.log("TESTE 1: DOM carregado, script visualizar.js está rodando.");
+
+const matriz2008 = [
+
+    // Primeiro Período
+    { codigo: 'MAT101', nome: 'Cálculo I', preRequisitos: [], periodo: 1 },
+    { codigo: 'GEO101', nome: 'Geometria Analítica e Álgebra Vetorial', preRequisitos: [], periodo: 1 },
+    { codigo: 'ING_I', nome: 'Inglês Instrumental I', preRequisitos: [], periodo: 1 },
+    { codigo: 'PORT_INST', nome: 'Português Instrumental', preRequisitos: [], periodo: 1 },
+    { codigo: 'PROG101', nome: 'Programação de Computadores I', preRequisitos: [], periodo: 1 },
+    { codigo: 'LAB_PROG101', nome: 'Lab. de Programação de Computadores I', preRequisitos: [], periodo: 1 },
+    { codigo: 'MET_CIE', nome: 'Metodologia Científica', preRequisitos: [], periodo: 1 },
+
+    // Segundo Período
+    { codigo: 'MAT102', nome: 'Cálculo II', preRequisitos: ['MAT101'], periodo: 2 },
+    { codigo: 'FIS101', nome: 'Física I', preRequisitos: ['MAT101'], periodo: 2 },
+    { codigo: 'FIL_TEC', nome: 'Filosofia da Tecnologia', preRequisitos: [], periodo: 2 },
+    { codigo: 'PROG102', nome: 'Programação de Computadores II', preRequisitos: ['PROG101', 'LAB_PROG101'], periodo: 2 },
+    { codigo: 'LAB_PROG102', nome: 'Lab. de Programação de Computadores II', preRequisitos: ['PROG101', 'LAB_PROG101'], periodo: 2 },
+    { codigo: 'LAB_SIS_DIG', nome: 'Lab. de Sistemas Digitais Para Computação', preRequisitos: ['PROG101', 'LAB_PROG101'], periodo: 2 },
+    { codigo: 'SIS_DIG', nome: 'Sistemas Digitais Para Computação', preRequisitos: ['PROG101', 'LAB_PROG101'], periodo: 2 },
+    { codigo: 'MAT_DISC', nome: 'Matemática Discreta', preRequisitos: [], periodo: 2 },
     
-    // --- COPIE SEUS DADOS DAS MATRIZES AQUI ---
-    // Copie as constantes 'matriz2008' e 'matriz2023' do seu arquivo script.js para cá
-    const matriz2008 = [
-        { codigo: 'MAT101', nome: 'Cálculo I', preRequisitos: [], periodo: 1 },
-        // ... cole o resto da sua matriz 2008 aqui
-    ];
+    // Terceiro Período
+    { codigo: 'MAT103', nome: 'Cálculo III', preRequisitos: ['MAT102', 'GEO101'], periodo: 3 },
+    { codigo: 'FIS102', nome: 'Física II', preRequisitos: ['FIS101', 'MAT102'], periodo: 3 },
+    { codigo: 'FE101', nome: 'Física Experimental I', preRequisitos: [], periodo: 3 },
+    { codigo: 'AED101', nome: 'Algoritmos e Estruturas de Dados I', preRequisitos: ['PROG102', 'LAB_PROG102'], periodo: 3 },
+    { codigo: 'LAB_AED101', nome: 'Lab. de Algoritmos e Estruturas de Dados I', preRequisitos: ['PROG102', 'LAB_PROG102'], periodo: 3 },
+    { codigo: 'ARQ_ORG_I', nome: 'Arquitetura e Organização de Computadores I', preRequisitos: ['SIS_DIG', 'LAB_SIS_DIG'], periodo: 3 },
+    { codigo: 'LAB_ARQ_ORG_I', nome: 'Lab. de Arquitetura e Organização de Computadores I', preRequisitos: ['SIS_DIG', 'LAB_SIS_DIG'], periodo: 3 },
+    { codigo: 'MET_NUM', nome: 'Métodos Numéricos Computacionais', preRequisitos: ['PROG101', 'LAB_PROG101', 'MAT103'], periodo: 3 },
     
-    const matriz2023 = [
-        { codigo: 'IEC', nome: 'Introdução à Engenharia de Computação', preRequisitos: [], periodo: 1 },
-        // ... cole o resto da sua matriz 2023 aqui
-    ];
+    // Quarto Período
+    { codigo: 'FIS103', nome: 'Física III', preRequisitos: ['FIS102'], periodo: 4 },
+    { codigo: 'FE102', nome: 'Física Experimental II', preRequisitos: ['FE101'], periodo: 4 },
+    { codigo: 'AED102', nome: 'Algoritmos e Estruturas de Dados II', preRequisitos: ['AED101', 'LAB_AED101'], periodo: 4 },
+    { codigo: 'LAB_AED102', nome: 'Lab. de Algoritmos e Estruturas de Dados II', preRequisitos: ['AED101', 'LAB_AED101'], periodo: 4 },
+    { codigo: 'ARQ_ORG_II', nome: 'Arquitetura e Organização de Computadores II', preRequisitos: ['ARQ_ORG_I', 'LAB_ARQ_ORG_I'], periodo: 4 },
+    { codigo: 'LAB_ARQ_ORG_II', nome: 'Lab. de Arquitetura e Organização de Computadores II', preRequisitos: ['ARQ_ORG_I', 'LAB_ARQ_ORG_I'], periodo: 4 },
+    { codigo: 'LING_PROG', nome: 'Linguagens de Programação', preRequisitos: ['AED101', 'LAB_AED101'], periodo: 4 },
+    { codigo: 'LAB_LING_PROG', nome: 'Lab. de Linguagens de Programação', preRequisitos: ['AED101', 'LAB_AED101'], periodo: 4 },
+    { codigo: 'MAT104', nome: 'Cálculo IV', preRequisitos: ['MAT103'], periodo: 4 },
 
-    // Função principal que renderiza a matriz na tela
-    function renderizarVisualizacao() {
-        const container = document.querySelector('.materias-container');
-        const tituloPagina = document.getElementById('titulo-matriz');
-        if (!container || !tituloPagina) return;
+    // Quinto Período
+    { codigo: 'ALG_LIN', nome: 'Álgebra Linear', preRequisitos: ['GEO101', 'MAT102'], periodo: 5 },
+    { codigo: 'BANCO_I', nome: 'Banco de Dados I', preRequisitos: ['AED102', 'LAB_AED102'], periodo: 5 },
+    { codigo: 'LAB_BANCO_I', nome: 'Lab. de Banco de Dados I', preRequisitos: ['AED102', 'LAB_AED102'], periodo: 5 },
+    { codigo: 'PRIN_COM_DADOS', nome: 'Princípios de Comunicação de Dados', preRequisitos: ['FIS103'], periodo: 5 },
+    { codigo: 'MODEL_SOFT', nome: 'Modelagem e Desenvolvimento de Software', preRequisitos: ['LING_PROG', 'LAB_LING_PROG'], periodo: 5 },
+    { codigo: 'LAB_MODEL_SOFT', nome: 'Lab. de Modelagem e Desenvolvimento de Software', preRequisitos: ['LING_PROG', 'LAB_LING_PROG'], periodo: 5 },
+    { codigo: 'LING_FORM', nome: 'Linguagens Formais e Autômatos', preRequisitos: ['MAT_DISC', 'LING_PROG', 'LAB_LING_PROG'], periodo: 5 },
 
-        // Pega o parâmetro da URL para decidir qual matriz mostrar
-        const params = new URLSearchParams(window.location.search);
-        const qualMatriz = params.get('matriz'); // Vai ser '2008' ou '2023'
+    // Sexto Período
+    { codigo: 'ENG_SOFT_I', nome: 'Engenharia de Software I', preRequisitos: ['MODEL_SOFT'], periodo: 6 },
+    { codigo: 'LAB_ENG_SOFT_I', nome: 'Lab. de Engenharia de Software I', preRequisitos: ['MODEL_SOFT', 'LAB_MODEL_SOFT'], periodo: 6 },
+    { codigo: 'REDES_I', nome: 'Redes de Computadores I', preRequisitos: ['PRIN_COM_DADOS'], periodo: 6 },
+    { codigo: 'LAB_REDES_I', nome: 'Lab. de Redes de Computadores I', preRequisitos: ['PRIN_COM_DADOS'], periodo: 6 },
+    { codigo: 'SIST_OP', nome: 'Sistemas Operacionais', preRequisitos: ['ARQ_ORG_II', 'LAB_ARQ_ORG_II'], periodo: 6 },
+    { codigo: 'LAB_SIST_OP', nome: 'Lab. de Sistemas Operacionais', preRequisitos: ['ARQ_ORG_II', 'LAB_ARQ_ORG_II'], periodo: 6 },
+    { codigo: 'CONT_SIS_DIN', nome: 'Controle de Sistemas Dinâmicos', preRequisitos: ['MET_NUM'], periodo: 6 },
+    { codigo: 'LAB_CONT_SIS_DIN', nome: 'Lab. de Controle de Sistemas Dinâmicos', preRequisitos: ['MET_NUM'], periodo: 6 },
 
-        const dadosDaMatriz = qualMatriz === '2023' ? matriz2023 : matriz2008;
-        tituloPagina.textContent = `Matriz Curricular de ${qualMatriz || '2008'}`;
+    // Sétimo Período
+    { codigo: 'IA', nome: 'Inteligência Artificial', preRequisitos: ['ALG_LIN', 'AED102', 'LAB_AED102', 'MET_NUM'], periodo: 7 },
+    { codigo: 'LAB_IA', nome: 'Lab. de Inteligência Artificial', preRequisitos: ['AED102', 'LAB_AED102'], periodo: 7 },
+    { codigo: 'COMPILADORES', nome: 'Compiladores', preRequisitos: ['AED102', 'LAB_AED102', 'LING_FORM', 'LING_PROG', 'LAB_LING_PROG'], periodo: 7 },
+    { codigo: 'Otim_I', nome: 'Otimização I', preRequisitos: ['ALG_LIN', 'AED102', 'LAB_AED102', 'MET_NUM'], periodo: 7 },
+    { codigo: 'CONT_DIG', nome: 'Controle Digital de Sistemas Dinâmicos', preRequisitos: ['CONT_SIS_DIN', 'LAB_CONT_SIS_DIN'], periodo: 7 },
+    { codigo: 'LAB_CONT_DIG', nome: 'Lab. de Controle Digital de Sistemas Dinâmicos', preRequisitos: ['CONT_SIS_DIN', 'LAB_CONT_SIS_DIN'], periodo: 7 },
+    { codigo: 'PSIC_APL_ORG', nome: 'Psicologia Aplicada às Organizações', preRequisitos: [], periodo: 7 },
 
-        container.innerHTML = '';
-        
-        // Agrupa as matérias por período
-        const periodos = {};
-        dadosDaMatriz.forEach(materia => {
-            if (!periodos[materia.periodo]) {
-                periodos[materia.periodo] = [];
-            }
-            periodos[materia.periodo].push(materia);
-        });
+    // Oitavo Período
+    { codigo: 'INTER_HUM_COMP', nome: 'Interação Humano-Computador', preRequisitos: ['MODEL_SOFT', 'LAB_MODEL_SOFT'], periodo: 8 },
+    { codigo: 'SIS_DIST', nome: 'Sistemas Distribuídos', preRequisitos: ['SIST_OP', 'LAB_SIST_OP'], periodo: 8 },
+    { codigo: 'OTIM_II', nome: 'Otimização II', preRequisitos: ['Otim_I'], periodo: 8 },
+    { codigo: 'IC_I', nome: 'Inteligência Computacional I', preRequisitos: ['IA', 'LAB_IA'], periodo: 8 },
+    { codigo: 'COMP_GRAF', nome: 'Computação Gráfica', preRequisitos: ['PROG101', 'LAB_PROG101', 'GEO101', 'MAT102'], periodo: 8 },
+    { codigo: 'INTRO_ADM', nome: 'Introdução à Administração', preRequisitos: [], periodo: 8 },
 
-        // Ordena os períodos
-        const periodosOrdenados = Object.keys(periodos).sort((a, b) => {
-            if (a === 'Optativas') return 1;
-            if (b === 'Optativas') return -1;
-            return parseInt(a) - parseInt(b);
-        });
+    // Nono Período
+    { codigo: 'TCC1', nome: 'Trabalho de Conclusão de Curso I', preRequisitos: [], periodo: 9 },
+    { codigo: 'ORG_EMP_A', nome: 'Organização Empresarial A', preRequisitos: [], periodo: 9 },
+    { codigo: 'MET_PESQ', nome: 'Metodologia de Pesquisa', preRequisitos: [], periodo: 9 },
 
-        // Cria os cards para cada período
-        periodosOrdenados.forEach(periodo => {
-            const periodoBox = document.createElement('div');
-            periodoBox.classList.add('periodo-box');
+    // Décimo Período
+    { codigo: 'TCC2', nome: 'Trabalho de Conclusão de Curso II', preRequisitos: ['TCC1'], periodo: 10 },
+    { codigo: 'ESTAGIO', nome: 'Estágio Supervisionado', preRequisitos: [], periodo: 10 },
+    { codigo: 'CONTEXTO_PROF', nome: 'Contexto Social e Profissional da Engenharia de Computação', preRequisitos: [], periodo: 10 },
+    { codigo: 'INTRO_SOCIO', nome: 'Introdução à Sociologia', preRequisitos: [], periodo: 10 },
+    
+    // Optativas
+    { codigo: 'COMP_EVOL', nome: 'Computação Evolucionária', preRequisitos: ['IA', 'LAB_IA'], periodo: 'Optativas' },
+    { codigo: 'MODEL_SIS_DIN', nome: 'Modelagem de Sistemas Dinâmicos', preRequisitos: ['MET_NUM', 'MAT104'], periodo: 'Optativas' },
+    { codigo: 'INST', nome: 'Instrumentação', preRequisitos: ['FIS103'], periodo: 'Optativas' },
+    { codigo: 'LAB_INST', nome: 'Laboratório de Instrumentação', preRequisitos: ['INST'], periodo: 'Optativas' },
+    { codigo: 'LIBRAS', nome: 'Introdução à Língua Brasileira de Sinais - Libras', preRequisitos: [], periodo: 'Optativas' },
+    { codigo: 'BANCO_II', nome: 'Banco de Dados II', preRequisitos: ['BANCO_I', 'LAB_BANCO_I'], periodo: 'Optativas' },
+    { codigo: 'INTRO_DIR', nome: 'Introdução ao Direito', preRequisitos: [], periodo: 'Optativas' },
+    { codigo: 'ING_II', nome: 'Inglês Instrumental II', preRequisitos: ['ING_I'], periodo: 'Optativas' },    
+    { codigo: 'INTRO_ECO', nome: 'Introdução à Economia', preRequisitos: [], periodo: 'Optativas'},
+    { codigo: 'GEST_AMB', nome: 'Gestão Ambiental', preRequisitos: [], periodo: 'Optativas'}
 
-            const tituloPeriodo = document.createElement('h2');
-            tituloPeriodo.textContent = periodo === 'Optativas' ? 'Disciplinas Optativas' : `Período ${periodo}`;
-            periodoBox.appendChild(tituloPeriodo);
+/*
 
-            const listaMaterias = document.createElement('div');
-            listaMaterias.classList.add('lista-materias');
+,
+    { codigo: 'AUTO_PROC_MAN', nome: 'Automação de Processos de Manufatura', preRequisitos: ['AUTO_PROC_CONT', 'LAB_AUTO_PROC_CONT'], periodo: 'Optativas' },
+    { codigo: 'SIST_BIO_INSP', nome: 'Sistemas Bio-Inspirados', preRequisitos: ['IA', 'LAB_IA'], periodo: 'Optativas' },
+    { codigo: 'ING_III', nome: 'Inglês Instrumental III', preRequisitos: ['ING_II'], periodo:'Optativas' },
+    { codigo: 'SIST_MULTIMIDIA', nome: 'Sistemas Multimídia', preRequisitos: ['COMP_GRAF'], periodo: 'Optativas'},
+    { codigo: 'ROBOTICA', nome: 'Robótica', preRequisitos: ['FIS102', 'CONT_SIS_DIN', 'LAB_CONT_SIS_DIN'], periodo: 'Optativas' },
+    { codigo: 'SIST_TEMPO_REAL', nome: 'Sistemas de Tempo Real', preRequisitos: ['MODEL_SOFT', 'LAB_MODEL_SOFT', 'SIS_DIST'], periodo: 'Optativas' },
+    { codigo: 'IC_II', nome: 'Inteligência Computacional II', preRequisitos: ['IA', 'LAB_IA'], periodo:'Optativas' },
+    { codigo: 'LAB_AUT_PROC_CONT', nome: 'Lab. de Automação de Processos Contínuos', preRequisitos: ['CONT_SIS_DIN', 'LAB_CONT_SIS_DIN'], periodo: 'Optativas' },
+    { codigo: 'AUT_PROC_CONT', nome: 'Automação de Processos Contínuos', preRequisitos: ['CONT_SIS_DIN', 'LAB_CONT_SIS_DIN'], periodo: 'Optativas' },
+    { codigo: 'EDU_CORP', nome: 'Educação Corporal e Formação Humana', preRequisitos: [], periodo: 'Optativas' }
 
-            periodos[periodo].forEach(materia => {
-                const item = document.createElement('div');
-                item.classList.add('materia-item');
-                
-                // A GRANDE DIFERENÇA: Criamos um item de texto simples, sem checkbox
-                const nomeMateria = document.createElement('span');
-                nomeMateria.textContent = materia.nome;
-                item.appendChild(nomeMateria);
-                
-                listaMaterias.appendChild(item);
-            });
+*/
+];
 
-            periodoBox.appendChild(listaMaterias);
-            container.appendChild(periodoBox);
-        });
+const matriz2023 = [
+
+    // Primeiro Período
+    { codigo: 'IEC', nome: 'Introdução à Engenharia de Computação', preRequisitos: [], periodo: 1 },
+    { codigo: 'FPI', nome: 'Fundamentos de Programação I', preRequisitos: [], periodo: 1 },
+    { codigo: 'LFPI', nome: 'Lab. de Fundamentos de Programação I', preRequisitos: [], periodo: 1 },
+    { codigo: 'CALC_I', nome: 'Cálculo com Funções de uma Variável Real', preRequisitos: [], periodo: 1 },
+    { codigo: 'GEO_AL', nome: 'Geometria Analítica e Álgebra Linear', preRequisitos: [], periodo: 1 },
+    { codigo: 'CEE', nome: 'Circuitos Elétricos e Eletrônica', preRequisitos: [], periodo: 1 },
+    { codigo: 'LAB_CEE', nome: 'Lab. de Circuitos Elétricos e Eletrônica', preRequisitos: [], periodo: 1 },
+    { codigo: 'FIL_TEC', nome: 'Filosofia da Tecnologia', preRequisitos: [], periodo: 1 },
+    { codigo: 'MET_CIE', nome: 'Metodologia Científica', preRequisitos: [], periodo: 1 },
+
+    // Segundo Período
+    { codigo: 'FPII', nome: 'Fundamentos de Programação II', preRequisitos: ['FPI', 'LFPI'], periodo: 2 },
+    { codigo: 'LAB_FPII', nome: 'Lab. de Fundamentos de Programação II', preRequisitos: ['FPI', 'LFPI'], periodo: 2 },
+    { codigo: 'MAT_DISC', nome: 'Matemática Discreta', preRequisitos: [], periodo: 2 },
+    { codigo: 'SDC', nome: 'Sistemas Digitais para Computação', preRequisitos: ['CEE', 'LAB_CEE'], periodo: 2 },
+    { codigo: 'LAB_SDC', nome: 'Lab. de Sistemas Digitais para Computação', preRequisitos: ['CEE', 'LAB_CEE'], periodo: 2 },
+    { codigo: 'INTEG_SERIES', nome: 'Integração e Séries', preRequisitos: ['CALC_I', 'GEO_AL'], periodo: 2 },
+    { codigo: 'FIS_MEC', nome: 'Fundamentos de Mecânica', preRequisitos: ['CALC_I', 'GEO_AL'], periodo: 2 },
+
+    // Terceiro Período
+    { codigo: 'ARQ_ORG_I', nome: 'Arquitetura e Organização de Computadores I', preRequisitos: ['SDC', 'LAB_SDC'], periodo: 3 },
+    { codigo: 'LAB_ARQ_ORG_I', nome: 'Lab. de Arquitetura e Organização de Computadores I', preRequisitos: ['SDC', 'LAB_SDC'], periodo: 3 },
+    { codigo: 'POO', nome: 'Programação Orientada a Objetos', preRequisitos: ['FPII', 'LAB_FPII'], periodo: 3 },
+    { codigo: 'LAB_POO', nome: 'Lab. de Programação Orientada a Objetos', preRequisitos: ['FPII', 'LAB_FPII'], periodo: 3 },
+    { codigo: 'CALC_VAR_I', nome: 'Cálculo com Funções de Várias Variáveis I', preRequisitos: ['INTEG_SERIES'], periodo: 3 },
+    { codigo: 'FIS_OFT', nome: 'Fundamentos de OFT', preRequisitos: ['FIS_MEC'], periodo: 3 },
+    { codigo: 'LAB_FIS_OFT', nome: 'Lab. de Fundamentos de OFT', preRequisitos: ['FIS_MEC'], periodo: 3 },
+
+    // Quarto Período
+    { codigo: 'AED_I', nome: 'Algoritmo e Estruturas de Dados I', preRequisitos: ['POO', 'LAB_POO'], periodo: 4 },
+    { codigo: 'LAB_AED_I', nome: 'Lab. de Algoritmo e Estruturas de Dados I', preRequisitos: ['POO', 'LAB_POO'], periodo: 4 },
+    { codigo: 'ARQ_ORG_II', nome: 'Arquitetura e Organização de Computadores II', preRequisitos: ['ARQ_ORG_I', 'LAB_ARQ_ORG_I'], periodo: 4 },
+    { codigo: 'LAB_ARQ_ORG_II', nome: 'Lab. de Arquitetura e Organização de Computadores II', preRequisitos: ['ARQ_ORG_I', 'LAB_ARQ_ORG_I'], periodo: 4 },
+    { codigo: 'BANCO_I', nome: 'Banco de Dados I', preRequisitos: ['AED_I', 'LAB_AED_I'], periodo: 4 },
+    { codigo: 'REDES_I', nome: 'Redes de Computadores I', preRequisitos: ['FIS_OFT', 'LAB_FIS_OFT'], periodo: 4 },
+    { codigo: 'EDO', nome: 'Equações Diferenciais Ordinárias', preRequisitos: ['INTEG_SERIES', 'CALC_VAR_I'], periodo: 4 },
+    { codigo: 'MODEL_SIS', nome: 'Modelagem de Sistemas', preRequisitos: ['BANCO_I'], periodo: 4 },
+    { codigo: 'LAB_MODEL_SIS', nome: 'Lab. de Modelagem de Sistemas', preRequisitos: ['BANCO_I'], periodo: 4 },
+
+    // Quinto Período
+    { codigo: 'CLP', nome: 'Conceitos de Linguagens de Programação', preRequisitos: ['AED_I', 'LAB_AED_I'], periodo: 5 },
+    { codigo: 'AED_II', nome: 'Algoritmo e Estrutura de Dados II', preRequisitos: ['AED_I', 'LAB_AED_I'], periodo: 5 },
+    { codigo: 'ELM', nome: 'Eletromagnetismo', preRequisitos: ['CALC_VAR_I', 'FIS_OFT', 'LAB_FIS_OFT'], periodo: 5 },
+    { codigo: 'FIS_EXP', nome: 'Física Experimental - EOFM', preRequisitos: ['ELM'], periodo: 5 },
+    { codigo: 'REDES_II', nome: 'Redes de Computadores II', preRequisitos: ['REDES_I', 'LAB_REDES_I'], periodo: 5 },
+    { codigo: 'LAB_REDES_II', nome: 'Lab. de Redes de Computadores II', preRequisitos: ['REDES_I', 'LAB_REDES_I'], periodo: 5 },
+    { codigo: 'SO', nome: 'Sistemas Operacionais', preRequisitos: ['ARQ_ORG_II', 'LAB_ARQ_ORG_II'], periodo: 5 },
+    { codigo: 'LAB_SO', nome: 'Lab. de Sistemas Operacionais', preRequisitos: ['ARQ_ORG_II', 'LAB_ARQ_ORG_II'], periodo: 5 },
+
+    // Sexto Período
+    { codigo: 'LIN_AUT', nome: 'Linguagens Formais e Autômatos', preRequisitos: ['MAT_DISC', 'POO', 'LAB_POO'], periodo: 6 },
+    { codigo: 'ESTATISTICA', nome: 'Estatística', preRequisitos: ['CALC_I', 'GEO_AL'], periodo: 6 },
+    { codigo: 'IA_I', nome: 'Inteligência Artificial I', preRequisitos: ['ESTATISTICA'], periodo: 6 },
+    { codigo: 'LAB_IA_I', nome: 'Lab. de Inteligência Artificial I', preRequisitos: ['ESTATISTICA'], periodo: 6 },
+    { codigo: 'OTIM_I', nome: 'Otimização I', preRequisitos: ['POO', 'LAB_POO', 'CLP'], periodo: 6 },
+    { codigo: 'CD_I', nome: 'Ciência de Dados I', preRequisitos: ['AED_II', 'LAB_AED_II'], periodo: 6 },
+    { codigo: 'LAB_CD_I', nome: 'Lab. de Ciência de Dados I', preRequisitos: ['AED_II', 'LAB_AED_II'], periodo: 6 },
+    { codigo: 'ES_I', nome: 'Engenharia de Software I', preRequisitos: ['MODEL_SIS', 'LAB_MODEL_SIS'], periodo: 6 },
+    { codigo: 'LAB_ES_I', nome: 'Lab. de Engenharia de Software I', preRequisitos: ['MODEL_SIS', 'LAB_MODEL_SIS'], periodo: 6 },
+
+    // Sétimo Período
+    { codigo: 'COMPILADORES', nome: 'Compiladores', preRequisitos: ['LIN_AUT', 'CLP', 'LAB_POO'], periodo: 7 },
+    { codigo: 'GEP', nome: 'Gestão de Produtos e Serviços', preRequisitos: ['ES_I', 'LAB_ES_I'], periodo: 7 },
+    { codigo: 'ESII', nome: 'Engenharia de Software II', preRequisitos: ['ES_I', 'LAB_ES_I'], periodo: 7 },
+    { codigo: 'REDES_III', nome: 'Redes de Computadores III', preRequisitos: ['REDES_II', 'LAB_REDES_II'], periodo: 7 },
+    { codigo: 'LAB_REDES_III', nome: 'Lab. de Redes de Computadores III', preRequisitos: ['REDES_II', 'LAB_REDES_II'], periodo: 7 },
+    { codigo: 'SD', nome: 'Sistemas Distribuídos', preRequisitos: ['SO', 'LAB_SO'], periodo: 7 },
+    { codigo: 'LAB_SD', nome: 'Lab. de Sistemas Distribuídos', preRequisitos: ['SO', 'LAB_SO'], periodo: 7 },
+
+    // Oitavo Período
+    { codigo: 'IHC', nome: 'Interação Humano-Computador', preRequisitos: ['ESII', 'LAB_ESII'], periodo: 8 },
+    { codigo: 'OTIM_II', nome: 'Otimização II', preRequisitos: ['OTIM_I'], periodo: 8 },
+    { codigo: 'IA_II', nome: 'Inteligência Artificial II', preRequisitos: ['IA_I', 'LAB_IA_I'], periodo: 8 },
+    { codigo: 'IC_I', nome: 'Inteligência Computacional I', preRequisitos: ['IA_I', 'LAB_IA_I'], periodo: 8 },
+    { codigo: 'CD_II', nome: 'Ciência de Dados II', preRequisitos: ['CD_I', 'LAB_CD_I'], periodo: 8 },
+    { codigo: 'LAB_CD_II', nome: 'Lab. de Ciência de Dados II', preRequisitos: ['CD_I', 'LAB_CD_I'], periodo: 8 },
+    { codigo: 'TCC_I', nome: 'Trabalho de Conclusão de Curso I', preRequisitos: [], periodo: 8 },
+
+    // Nono Período
+    { codigo: 'EMN', nome: 'Empreendedorismo e Modelo de Negócios', preRequisitos: [], periodo: 9 },
+    { codigo: 'INTRO_SOCIO', nome: 'Introdução à Sociologia', preRequisitos: [], periodo: 9 },
+    { codigo: 'MET_PESQ', nome: 'Metodologia de Pesquisa', preRequisitos: [], periodo: 9 },
+    { codigo: 'TCC_II', nome: 'Trabalho de Conclusão de Curso II', preRequisitos: ['TCC_I'], periodo: 9 },
+
+    // Décimo Período
+    { codigo: 'CSPE', nome: 'Contexto Social e Profissional do Engenheiro', preRequisitos: [], periodo: 10 },
+    { codigo: 'ESTAGIO', nome: 'Estágio Supervisionado', preRequisitos: [], periodo: 10 },
+    
+    // Optativas
+    { codigo: 'EDP', nome: 'Equações Diferenciais Parciais', preRequisitos: ['EDO'], periodo: 'Optativas' },
+    { codigo: 'FIM', nome: 'Fundamentos de Física Moderna', preRequisitos: ['FIS_OFT'], periodo: 'Optativas' },
+    { codigo: 'PC', nome: 'Programação Concorrente', preRequisitos: ['SO', 'LAB_SO'], periodo: 'Optativas' },
+    { codigo: 'CII', nome: 'Inteligência Computacional II', preRequisitos: ['IA_I', 'LAB_IA_I'], periodo: 'Optativas' },
+    { codigo: 'GSR', nome: 'Gestão de Produtos e Serviços', preRequisitos: [], periodo: 'Optativas' },
+    { codigo: 'CDM', nome: 'Controle Digital de Sistemas Dinâmicos', preRequisitos: ['CD_I', 'LAB_CD_I'], periodo: 'Optativas' },
+    { codigo: 'MD', nome: 'Modelagem de Sistemas Dinâmicos', preRequisitos: ['CD_I', 'LAB_CD_I'], periodo: 'Optativas' },
+    { codigo: 'RP', nome: 'Reconhecimento de Padrões', preRequisitos: ['IA_I', 'LAB_IA_I'], periodo: 'Optativas' },
+    { codigo: 'CE', nome: 'Computação Evolucionária', preRequisitos: ['IA_I', 'LAB_IA_I'], periodo: 'Optativas' },
+    { codigo: 'ICPO', nome: 'Inteligência Computacional para Otimização', preRequisitos: ['OTIM_I'], periodo: 'Optativas' },
+    { codigo: 'SBI', nome: 'Sistemas Bio-inspirados', preRequisitos: ['IA_I', 'LAB_IA_I'], periodo: 'Optativas' },
+    { codigo: 'ADM_MER', nome: 'Administração Mercadológica', preRequisitos: [], periodo: 'Optativas' },
+    { codigo: 'OTIM_COMB', nome: 'Otimização Combinatória', preRequisitos: ['OTIM_I'], periodo: 'Optativas' }
+];
+
+
+    console.log(`TESTE 2: Dados carregados. Matriz 2008 tem ${matriz2008.length} matérias. Matriz 2023 tem ${matriz2023.length} matérias.`);
+
+    /**
+ * Renderiza a matriz curricular de forma estática (apenas para visualização).
+ */
+function renderizarVisualizacao() {
+    const container = document.querySelector('.materias-container');
+    const tituloPagina = document.getElementById('titulo-matriz');
+
+    if (!container || !tituloPagina) {
+        console.error("Elementos essenciais não encontrados na página.");
+        return;
     }
 
-    // Chama a função para renderizar tudo
-    renderizarVisualizacao();
+    // Pega o parâmetro da URL para decidir qual matriz mostrar (ex: ?matriz=2008)
+    const params = new URLSearchParams(window.location.search);
+    const qualMatriz = params.get('matriz') || '2008'; // Padrão para 2008 se nada for especificado
 
-    // Inicia as partículas (código opcional para o fundo animado)
-    window.dispatchEvent(new Event('load'));
+    const dadosDaMatriz = qualMatriz === '2023' ? matriz2023 : matriz2008;
+    tituloPagina.textContent = `Matriz Curricular de ${qualMatriz}`;
+    container.innerHTML = '';
+    
+    // Agrupa as matérias por período
+    const periodos = {};
+    dadosDaMatriz.forEach(materia => {
+        const periodo = materia.periodo;
+        if (!periodos[periodo]) {
+            periodos[periodo] = [];
+        }
+        periodos[periodo].push(materia);
+    });
+
+    // Ordena os períodos numericamente, deixando 'Optativas' por último
+    const periodosOrdenados = Object.keys(periodos).sort((a, b) => {
+        if (a === 'Optativas') return 1;
+        if (b === 'Optativas') return -1;
+        return parseInt(a) - parseInt(b);
+    });
+
+    // Cria os cards para cada período
+    periodosOrdenados.forEach(periodo => {
+        const periodoBox = document.createElement('div');
+        periodoBox.classList.add('periodo-box');
+
+        const tituloPeriodo = document.createElement('h2');
+        tituloPeriodo.textContent = periodo === 'Optativas' ? 'Disciplinas Optativas' : `Período ${periodo}`;
+        periodoBox.appendChild(tituloPeriodo);
+
+        const listaMaterias = document.createElement('div');
+        listaMaterias.classList.add('lista-materias');
+
+        periodos[periodo].forEach(materia => {
+            const item = document.createElement('div');
+            item.classList.add('materia-item', 'view-only');
+            
+            const codigoSpan = document.createElement('span');
+            codigoSpan.className = 'materia-codigo';
+            codigoSpan.textContent = materia.codigo;
+            
+            const nomeSpan = document.createElement('span');
+            nomeSpan.className = 'materia-nome';
+            nomeSpan.textContent = materia.nome;
+            
+            item.appendChild(codigoSpan);
+            item.appendChild(nomeSpan);
+            
+            listaMaterias.appendChild(item);
+        });
+
+        // =======================================================
+        // === A LINHA DA CORREÇÃO ESTÁ AQUI ===
+        // Adiciona a lista de matérias (já preenchida) ao card do período.
+        periodoBox.appendChild(listaMaterias);
+        // =======================================================
+        
+        container.appendChild(periodoBox);
+    });
+}
+
+    renderizarVisualizacao();
 });

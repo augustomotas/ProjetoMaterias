@@ -6,7 +6,7 @@
     <title>Visualizar Matriz Curricular</title>
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body class="matriz-page">
+  <body class="matriz-page view-only">
     <div id="particles-background" class="particles-container"></div>
 
     <div id="pageContainer" class="page-container">
@@ -30,7 +30,37 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.9.3/tsparticles.bundle.min.js"></script>
-
     <script src="visualizar.js"></script>
+
+    <script>
+      window.addEventListener("load", () => {
+        if (typeof tsParticles !== "undefined") {
+          tsParticles.load("particles-background", {
+            fpsLimit: 60,
+            particles: {
+              number: { value: 60, density: { enable: true, value_area: 800 } },
+              shape: { type: "circle" },
+              opacity: { value: 0.5, random: true },
+              size: { value: 3, random: true },
+              move: {
+                enable: true,
+                speed: 1,
+                direction: "none",
+                out_mode: "out",
+              },
+              color: { value: "#4FD1C5" },
+              line_linked: {
+                enable: true,
+                distance: 150,
+                opacity: 0.4,
+                width: 1,
+                color: { value: "#4FD1C5" },
+              },
+            },
+            detectRetina: true,
+          });
+        }
+      });
+    </script>
   </body>
 </html>
