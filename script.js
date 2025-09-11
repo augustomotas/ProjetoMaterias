@@ -551,11 +551,7 @@ function renderizarMaterias() {
                     const tooltip = document.createElement('div');
                     tooltip.className = 'prereq-tooltip';
                     
-                    // --- NOVA ADIÇÃO: Verifica se o período é o último da linha para ajustar a posição da tooltip ---
-                    // Isso é um ajuste manual, pode precisar de refinamento para layouts mais complexos
-                    if (periodo % 2 === 0 || periodo === 'Optativas') { // Se for período par ou optativas, assume que está na coluna direita
-                         tooltip.classList.add('prereq-tooltip-left');
-                    }
+
                     // --- FIM DA NOVA ADIÇÃO ---
                     
                     let tooltipContent = '<span>Pré-requisitos pendentes:</span><ul>';

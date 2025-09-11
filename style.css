@@ -438,6 +438,18 @@ h1 {
 }
 
 /* ======================================================= */
+/* === CORREÇÃO DEFINITIVA PARA TOOLTIP CORTADA === */
+/* ======================================================= */
+
+/*
+  Força o card do período a permitir que elementos "vazem" para fora,
+  garantindo que a tooltip nunca seja cortada.
+*/
+.periodo-box {
+    overflow: visible !important;
+}
+
+/* ======================================================= */
 /* === RESPONSIVIDADE (MEDIA QUERIES) - IMPORTANTE ESTAR NO FINAL === */
 /* ======================================================= */
 @media (max-width: 768px) {
@@ -804,6 +816,7 @@ body.matriz-page.view-only footer {
 
 /* Mostra a tooltip quando o mouse está sobre o item bloqueado */
 .materia-item.bloqueada:hover .prereq-tooltip {
+    height: fit-content;
     opacity: 1;
     visibility: visible;
     transform: translateY(-50%);
