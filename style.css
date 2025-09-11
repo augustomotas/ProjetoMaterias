@@ -12,7 +12,7 @@ body {
     background-color: #1A202C;
     color: #f0f0f5;
     min-height: 100vh;
-    overflow-x: hidden;
+    overflow-x: visible;
     position: relative;
     display: flex;
     flex-direction: column;
